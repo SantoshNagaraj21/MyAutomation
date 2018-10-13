@@ -2,6 +2,7 @@ package set.fusion.api.test;
 
 import java.util.LinkedHashMap;
 
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -9,14 +10,21 @@ import org.testng.annotations.Test;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import set.fusion.common.BaseAPITest;
 import set.fusion.common.DataProviderClass;
 
-public class apiposttest {
+public class apiposttest extends BaseAPITest {
 	
 	@Test(dataProvider="APITest",dataProviderClass=DataProviderClass.class)
 	public void ApiPostRequest(LinkedHashMap<String, String> dataMap) {
+		
+		Logger logger = Logger.getLogger("APITest");
+		
+		logger.info("---------------------------------------------------");
+		logger.info("Running test for Scenario apiposttest");
+		logger.info("---------------------------------------------------");
 
-		RestAssured.baseURI = "http://restapi.demoqa.com/customer";
+		RestAssured.baseURI = "http://dummy.restapiexample.com/api/v1";
 
 		RequestSpecification request = RestAssured.given();
 		
@@ -30,19 +38,19 @@ public class apiposttest {
 		
 		System.out.println("Input Values " + FirstName + LastName + UserName + Password + Email);
 				
-		JSONObject requestParams = new JSONObject();
+//		JSONObject requestParams = new JSONObject();
 
-		requestParams.put("FirstName", FirstName); // Cast
-		requestParams.put("LastName", LastName);
-
-		requestParams.put("UserName", UserName);	
-		requestParams.put("Password", Password);
-		requestParams.put("Email", Email);
-
-		request.header("Content-Type", "application/json");
-		request.body(requestParams.toJSONString());
+//		requestParams.put("FirstName", FirstName); // Cast
+//		requestParams.put("LastName", LastName);
+//
+//		requestParams.put("UserName", UserName);	
+//		requestParams.put("Password", Password);
+//		requestParams.put("Email", Email);
+//
+//		request.header("Content-Type", "application/json");
+//		request.body(requestParams.toJSONString());
 	
-		Response response = request.post("/register");		
+		Response response = request.get("/employees");		
 
 		String responseBody = response.getBody().asString();
 
@@ -50,10 +58,10 @@ public class apiposttest {
 
 		int rstatuscode = response.getStatusCode();
 
-		Assert.assertEquals(rstatuscode, 201);
+		Assert.assertEquals(rstatuscode, 200);
 
-		String successCode = response.jsonPath().get("SuccessCode");
-		Assert.assertEquals(successCode, "OPERATION_SUCCESS");
+//		String successCode = response.jsonPath().get("SuccessCode");
+//		Assert.assertEquals(successCode, "OPERATION_SUCCESS");
 
 	}
 
