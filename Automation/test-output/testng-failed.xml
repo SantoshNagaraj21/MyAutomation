@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="set.fusion.api.test.apitest">
+      <class name="demo.api.test.dataProvDemo">
         <methods>
-          <include name="Closure"/>
-          <include name="APiTest"/>
           <include name="InitialSetup"/>
+          <include name="Closure"/>
+          <include name="ApiPostRequest"/>
         </methods>
-      </class> <!-- set.fusion.api.test.apitest -->
+      </class> <!-- demo.api.test.dataProvDemo -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

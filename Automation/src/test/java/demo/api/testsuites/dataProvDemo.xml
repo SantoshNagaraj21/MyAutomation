@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="DataProviderDemo">
+	<parameter name="baseurl"
+		value="http://dummy.restapiexample.com/api/v1/"></parameter>
+  <test thread-count="5" name="SampleCheck">
+  		<parameter name="extendedUrl" value="employees"></parameter>
+		<parameter name="baseurl1" value="Override Suite Level Param"></parameter>
+    <classes>
+      <class name="demo.api.test.dataProvDemo"/>
+    </classes>
+  </test> <!-- SampleCheck -->
+</suite> <!-- DataProviderDemo -->
