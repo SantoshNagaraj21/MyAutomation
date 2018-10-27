@@ -26,8 +26,8 @@ public class DataProvider {
 
 	static XSSFWorkbook WB;
 	static XSSFSheet sheet;
-	private static XSSFCell Cell;
 
+	@SuppressWarnings("rawtypes")
 	public static HashMap[][] testData(String sheetName) throws Exception {
 
 		String filepath = ReadProperties.getPropertyValue("TestDataPath",
@@ -45,7 +45,6 @@ public class DataProvider {
 		ArrayList<LinkedHashMap<String, String>> arraylist = new ArrayList<LinkedHashMap<String, String>>();
 
 		int frow = 1;
-		int hrow = 0;
 
 		int totalRows = sheet.getLastRowNum();
 		int totalcols = sheet.getRow(frow).getLastCellNum();
@@ -93,6 +92,7 @@ public class DataProvider {
 
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static HashMap[][] testDataXML(String xmlName)
 			throws IOException, ParserConfigurationException, SAXException {
 

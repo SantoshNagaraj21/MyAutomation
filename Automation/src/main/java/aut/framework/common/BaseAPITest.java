@@ -1,7 +1,6 @@
 package aut.framework.common;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.testng.annotations.AfterClass;

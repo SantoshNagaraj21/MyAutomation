@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2018-10-14T14:52:15Z" name="Suite" finished-at="2018-10-14T14:52:15Z" duration-ms="146">
+  <suite name="EmployeeApiTestSuites" duration-ms="4222" started-at="2018-10-27T18:08:18Z" finished-at="2018-10-27T18:08:22Z">
     <groups>
     </groups>
-    <test started-at="2018-10-14T14:52:15Z" name="Test" finished-at="2018-10-14T14:52:15Z" duration-ms="146">
-      <class name="demo.api.test.parameterizedTest">
-        <test-method is-config="true" signature="InitialSetup()[pri:0, instance:demo.api.test.parameterizedTest@37858383]" started-at="2018-10-14T14:52:15Z" name="InitialSetup" finished-at="2018-10-14T14:52:15Z" duration-ms="115" status="PASS">
+    <test name="EmployeeApiTests" duration-ms="4222" started-at="2018-10-27T18:08:18Z" finished-at="2018-10-27T18:08:22Z">
+      <class name="dummy.restapi.test.EmployeeApiTests">
+        <test-method status="PASS" signature="InitialSetup()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@cb644e]" name="InitialSetup" is-config="true" duration-ms="74" started-at="2018-10-27T18:08:18Z" finished-at="2018-10-27T18:08:18Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- InitialSetup -->
-        <test-method signature="ApiPostRequest(java.lang.String, java.lang.String)[pri:0, instance:demo.api.test.parameterizedTest@37858383]" started-at="2018-10-14T14:52:15Z" name="ApiPostRequest" finished-at="2018-10-14T14:52:15Z" duration-ms="12" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[http://dummy.restapiexample.com/api/v1/]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[/employees]]>
-              </value>
-            </param>
-          </params>
+        <test-method status="PASS" signature="createEmployees()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@cb644e]" name="createEmployees" duration-ms="4032" started-at="2018-10-27T18:08:18Z" finished-at="2018-10-27T18:08:22Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- ApiPostRequest -->
-        <test-method is-config="true" signature="Closure()[pri:0, instance:demo.api.test.parameterizedTest@37858383]" started-at="2018-10-14T14:52:15Z" name="Closure" finished-at="2018-10-14T14:52:15Z" duration-ms="1" status="PASS">
+        </test-method> <!-- createEmployees -->
+        <test-method status="PASS" signature="createArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@cb644e]" name="createArrayRequestBody" duration-ms="11" started-at="2018-10-27T18:08:22Z" finished-at="2018-10-27T18:08:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createArrayRequestBody -->
+        <test-method status="PASS" signature="createJsonArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@cb644e]" name="createJsonArrayRequestBody" duration-ms="5" started-at="2018-10-27T18:08:22Z" finished-at="2018-10-27T18:08:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createJsonArrayRequestBody -->
+        <test-method status="PASS" signature="Closure()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@cb644e]" name="Closure" is-config="true" duration-ms="0" started-at="2018-10-27T18:08:22Z" finished-at="2018-10-27T18:08:22Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Closure -->
-      </class> <!-- demo.api.test.parameterizedTest -->
-    </test> <!-- Test -->
-  </suite> <!-- Suite -->
+      </class> <!-- dummy.restapi.test.EmployeeApiTests -->
+    </test> <!-- EmployeeApiTests -->
+  </suite> <!-- EmployeeApiTestSuites -->
 </testng-results>
