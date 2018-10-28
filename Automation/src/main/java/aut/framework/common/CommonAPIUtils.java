@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,12 +14,14 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+import org.testng.xml.ISuiteParser;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.jayway.jsonpath.JsonPath;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -28,6 +32,10 @@ public class CommonAPIUtils {
 	public static SoftAssert softAssertion = new SoftAssert();
 
 	public static final String filepath = "\\src\\test\\resources\\test-data";
+
+	static Date date = new Date();
+
+	static SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
 
 	public static Response runRequest(Object... params) {
 
@@ -42,41 +50,58 @@ public class CommonAPIUtils {
 		Object expRespCode = params[3];
 
 		RestAssured.baseURI = RequestURL;
-		RequestSpecification request = RestAssured.given();
+		RequestSpecification request = RestAssured.given().log().headers();
+//										.log().all(true);
+//										.log().method()
+//										.log().uri()
+//										.log().headers()
+//										.log().parameters();
 		Response response = null;
 
-		// Objects from 5th are considered headers for request
+		// Objects from 5th are considered headers or contentTypes for request
 
 		int length = params.length;
 
 		if (length >= 5) {
 
 			for (int i = 4; i < length; i++) {
-				String header = (String) params[i];
-				String[] parts = header.split(":");
-				String headername = parts[0];
-				String headervalue = parts[1];
-				request.given().headers(headername, headervalue);
+				String reqspec = (String) params[i];
+				String[] parts = reqspec.split(":");
+				String type = parts[0];
+				String attributename = parts[1];
+				String attributevalue = parts[2];
+
+				if (type.equals("HEADER")) {
+
+					request.given().headers(attributename, attributevalue);
+
+				} else if ((type.equals("CONTENT"))) {
+
+					request.given().headers(attributename, attributevalue);
+
+				} else if ((type.equals("AUTH"))) {
+
+					request.given().auth().preemptive().basic(attributename, attributevalue);
+
+				} else if ((type.equals("URLENCODE"))) {
+
+					boolean value;
+					if (attributename == "true")
+						value = true;
+					else
+						value = false;
+
+					request.given().urlEncodingEnabled(value);
+
+				}
 
 			}
 
 		}
 
-		System.out.println(RequestType + " " + RequestURL);
+		System.out.println(formatter.format(date) + "\n");
 
-		System.out.println("Expected Status Code : " + expRespCode);
-
-		if (RequestBody != null) {
-
-			String prettyRequestBody = toPrettyFormat(RequestBody);
-
-			System.out.println("RequestBody: " + prettyRequestBody);
-
-		} else {
-
-			System.out.println("RequestBody: " + RequestBody);
-
-		}
+		System.out.println(RequestType + " " + RequestURL + "\n");
 
 		if (RequestType == "GET") {
 
@@ -108,20 +133,36 @@ public class CommonAPIUtils {
 
 		}
 
+		System.out.println("Expected Status Code : " + expRespCode + "\n");
+
+		if (RequestBody != null) {
+
+			String prettyRequestBody = toPrettyFormat(RequestBody);
+
+			System.out.println("RequestBody: \n" + prettyRequestBody + "\n");
+
+		} else {
+
+			System.out.println("RequestBody: \n" + RequestBody + "\n");
+
+		}
+
+//		System.out.println("Expected Status Code : " + expRespCode + "\n");
+
 		String responseBody = response.getBody().asString();
 		int rstatuscode = response.getStatusCode();
 
-		System.out.println("Actual Status Code : " + rstatuscode);
+		System.out.println("Actual Status Code : " + rstatuscode + "\n");
 
 		if (responseBody != null) {
 
 			String prettyResponseBody = toPrettyFormat(responseBody);
 
-			System.out.println("ResponseBody: " + prettyResponseBody);
+			System.out.println("ResponseBody: \n" + prettyResponseBody + "\n");
 
 		} else {
 
-			System.out.println("ResponseBody: " + responseBody);
+			System.out.println("ResponseBody: \n" + responseBody + "\n");
 
 		}
 
@@ -129,26 +170,78 @@ public class CommonAPIUtils {
 
 	}
 
-	public static String createRequestBody(Object... requestparams) {
+	public static boolean checkStatus(String requestType, String URL, int expStatusCode, int actStatusCode) {
 
-		JSONObject requestBody = new JSONObject();
+		if (expStatusCode == actStatusCode) {
 
-		int length = requestparams.length;
+//			System.out.println(requestType + " " + URL + " ");
+			System.out.println("Expected and Actual Status Code Matches\n");
+			System.out.println("exit code: 0\n");
+			return true;
 
-		for (int i = 0; i < length; i++) {
+		} else {
 
-			String attribute = (String) requestparams[i];
-			String[] parts = attribute.split(":");
-			String attributename = parts[0];
-			String attributevalue = parts[1];
-
-			requestBody.put(attributename, attributevalue);
+//			System.out.println(requestType + " " + URL + " ");
+			System.out.println("Expected and Actual Status Code Doesn't Match\n");
+			System.out.println("exit code: 1\n");
+			return false;
 
 		}
 
-		String reqBody = requestBody.toString();
+	}
 
-		return reqBody;
+	public static boolean checkValues(String requestType, String URL, String expattribute, String actualattribute) {
+
+		System.out.println(formatter.format(date) + "\n");
+
+		if (expattribute.equals(actualattribute)) {
+
+			System.out.println(requestType + " " + URL + "\n");
+			System.out.println("Expected Value : " + expattribute);
+			System.out.println("Actual Value   : " + actualattribute + "\n");
+			System.out.println("Expected and Actual Value Matches\n");
+			System.out.println("exit code: 0\n");
+			return true;
+
+		} else {
+
+			System.out.println(requestType + " " + URL + "\n");
+			System.out.println("Expected Value : " + expattribute);
+			System.out.println("Actual Value   : " + actualattribute + "\n");
+			System.out.println("Expected and Actual Value Doesn't Match\n");
+			System.out.println("exit code: 1\n");
+
+			return false;
+
+		}
+
+	}
+
+	public static boolean checkValuesNotEqual(String requestType, String URL, String expattribute,
+			String actualattribute) {
+
+		System.out.println(formatter.format(date) + "\n");
+
+		if (expattribute.equals(actualattribute)) {
+
+			System.out.println(requestType + " " + URL + " ");
+			System.out.println("Expected Value : " + expattribute);
+			System.out.println("Actual Value   : " + actualattribute + "\n");
+			System.out.println("Expected and Actual Value Matches\n");
+			System.out.println("exit code: 1\n");
+			return false;
+
+		} else {
+
+			System.out.println(requestType + " " + URL + " ");
+			System.out.println("Expected Value : " + expattribute);
+			System.out.println("Actual Value   : " + actualattribute + "\n");
+			System.out.println("Expected and Actual Value Doesn't Match\n");
+			System.out.println("exit code: 0\n");
+
+			return true;
+
+		}
 
 	}
 
@@ -184,6 +277,29 @@ public class CommonAPIUtils {
 
 	}
 
+	public static String createRequestBody(Object... requestparams) {
+
+		JSONObject requestBody = new JSONObject();
+
+		int length = requestparams.length;
+
+		for (int i = 0; i < length; i++) {
+
+			String attribute = (String) requestparams[i];
+			String[] parts = attribute.split(":");
+			String attributename = parts[0];
+			String attributevalue = parts[1];
+
+			requestBody.put(attributename, attributevalue);
+
+		}
+
+		String reqBody = requestBody.toString();
+
+		return reqBody;
+
+	}
+
 	public static JSONArray createArrayRequestBody(Object... requestparams) {
 
 		JSONArray jsonArray = new JSONArray();
@@ -204,56 +320,6 @@ public class CommonAPIUtils {
 		}
 
 		jsonArray.put(requestBody);
-
-		return jsonArray;
-
-	}
-
-	public static String getValueFromJSON(String jsonString, String attribute) {
-
-		String attributeValue = null;
-
-		Object obj = new JSONTokener(jsonString).nextValue();
-
-		if (obj instanceof JSONObject) {
-
-			JSONObject object = new JSONObject(jsonString);
-
-			System.out.println("JSON Object" + object);
-
-			attributeValue = object.getString(attribute);
-
-			return attributeValue;
-
-		}
-
-		return attributeValue;
-
-	}
-
-	public static String getFile(String filepath, String filename)
-			throws FileNotFoundException, IOException, ParseException {
-
-		File file = new File("./" + filepath + "\\" + filename);
-
-		JSONParser parser = new JSONParser();
-		String jsonString = parser.parse(new FileReader(file)).toString();
-
-		return jsonString;
-
-	}
-
-	public static JSONArray createJsonArrayRequestBody(JSONObject... requestparams) {
-
-		JSONArray jsonArray = new JSONArray();
-
-		int length = requestparams.length;
-
-		for (int i = 0; i < length; i++) {
-
-			jsonArray.put(requestparams[i]);
-
-		}
 
 		return jsonArray;
 
@@ -280,74 +346,42 @@ public class CommonAPIUtils {
 
 	}
 
-	public static boolean checkStatus(String requestType, String URL, int expStatusCode, int actStatusCode) {
+	public static JSONArray createJsonArrayRequestBody(JSONObject... requestparams) {
 
-		if (expStatusCode == actStatusCode) {
+		JSONArray jsonArray = new JSONArray();
 
-//			System.out.println(requestType + " " + URL + " ");
-			System.out.println("Expected and Actual Status Code Matches");
-			System.out.println("exit code: 0");
-			return true;
+		int length = requestparams.length;
 
-		} else {
+		for (int i = 0; i < length; i++) {
 
-//			System.out.println(requestType + " " + URL + " ");
-			System.out.println("Expected and Actual Status Code Doesn't Match");
-			System.out.println("exit code: 1");
-			return false;
+			jsonArray.put(requestparams[i]);
 
 		}
+
+		return jsonArray;
 
 	}
 	
-	public static boolean checkValues(String requestType, String URL, String expattribute, String actualattribute) {
+	public static String getFile(String filepath, String filename)
+			throws FileNotFoundException, IOException, ParseException {
 
-		if (expattribute.equals(actualattribute)) {
+		File file = new File("./" + filepath + "\\" + filename);
 
-			System.out.println(requestType + " " + URL + " ");
-			System.out.println("Expected Value : " + expattribute );
-			System.out.println("Actual Value   : " + actualattribute);
-			System.out.println("Expected and Actual Value Matches");
-			System.out.println("exit code: 0");
-			return true;
+		JSONParser parser = new JSONParser();
+		String jsonString = parser.parse(new FileReader(file)).toString();
 
-		} else {
-
-			System.out.println(requestType + " " + URL + " ");
-			System.out.println("Expected Value : " + expattribute );
-			System.out.println("Actual Value   : " + actualattribute);
-			System.out.println("Expected and Actual Value Doesn't Match");
-			System.out.println("exit code: 1");
-			
-			return false;
-
-		}
+		return jsonString;
 
 	}
-	
-	public static boolean checkValuesNotEqual(String requestType, String URL, String expattribute, String actualattribute) {
 
-		if (expattribute.equals(actualattribute)) {
+	public static String getValueFromJSON(String jsonString, String attribute) {
 
-			System.out.println(requestType + " " + URL + " ");
-			System.out.println("Expected Value : " + expattribute );
-			System.out.println("Actual Value   : " + actualattribute);
-			System.out.println("Expected and Actual Value Matches");
-			System.out.println("exit code: 1");
-			return false;
+		String temp = JsonPath.read(jsonString, "$" + attribute);
 
-		} else {
-
-			System.out.println(requestType + " " + URL + " ");
-			System.out.println("Expected Value : " + expattribute );
-			System.out.println("Actual Value   : " + actualattribute);
-			System.out.println("Expected and Actual Value Doesn't Match");
-			System.out.println("exit code: 0");
-			
-			return true;
-
-		}
+		return temp;
 
 	}
+
+
 
 }

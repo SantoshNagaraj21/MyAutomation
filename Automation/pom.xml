@@ -88,6 +88,12 @@
 			<artifactId>javassist</artifactId>
 			<version>3.12.1.GA</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.github.fge/json-patch -->
+		<dependency>
+			<groupId>com.github.fge</groupId>
+			<artifactId>json-patch</artifactId>
+			<version>1.9</version>
+		</dependency>
 
 	</dependencies>
 </project>

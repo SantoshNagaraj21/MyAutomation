@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
+<testng-results skipped="0" failed="0" ignored="1" total="4" passed="3">
   <reporter-output>
   </reporter-output>
-  <suite name="EmployeeApiTestSuites" duration-ms="4222" started-at="2018-10-27T18:08:18Z" finished-at="2018-10-27T18:08:22Z">
+  <suite name="EmployeeApiTestSuites" duration-ms="4212" started-at="2018-10-28T08:14:03Z" finished-at="2018-10-28T08:14:08Z">
     <groups>
     </groups>
-    <test name="EmployeeApiTests" duration-ms="4222" started-at="2018-10-27T18:08:18Z" finished-at="2018-10-27T18:08:22Z">
+    <test name="EmployeeApiTests" duration-ms="4212" started-at="2018-10-28T08:14:03Z" finished-at="2018-10-28T08:14:08Z">
       <class name="dummy.restapi.test.EmployeeApiTests">
-        <test-method status="PASS" signature="InitialSetup()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@cb644e]" name="InitialSetup" is-config="true" duration-ms="74" started-at="2018-10-27T18:08:18Z" finished-at="2018-10-27T18:08:18Z">
+        <test-method status="PASS" signature="InitialSetup()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@5649fd9b]" name="InitialSetup" is-config="true" duration-ms="64" started-at="2018-10-28T08:14:03Z" finished-at="2018-10-28T08:14:03Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- InitialSetup -->
-        <test-method status="PASS" signature="createEmployees()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@cb644e]" name="createEmployees" duration-ms="4032" started-at="2018-10-27T18:08:18Z" finished-at="2018-10-27T18:08:22Z">
+        <test-method status="PASS" signature="createEmployees()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@5649fd9b]" name="createEmployees" duration-ms="4049" started-at="2018-10-28T08:14:03Z" finished-at="2018-10-28T08:14:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createEmployees -->
-        <test-method status="PASS" signature="createArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@cb644e]" name="createArrayRequestBody" duration-ms="11" started-at="2018-10-27T18:08:22Z" finished-at="2018-10-27T18:08:22Z">
+        <test-method status="PASS" signature="createArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@5649fd9b]" name="createArrayRequestBody" duration-ms="6" started-at="2018-10-28T08:14:07Z" finished-at="2018-10-28T08:14:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createArrayRequestBody -->
-        <test-method status="PASS" signature="createJsonArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@cb644e]" name="createJsonArrayRequestBody" duration-ms="5" started-at="2018-10-27T18:08:22Z" finished-at="2018-10-27T18:08:22Z">
+        <test-method status="PASS" signature="createJsonArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@5649fd9b]" name="createJsonArrayRequestBody" duration-ms="3" started-at="2018-10-28T08:14:08Z" finished-at="2018-10-28T08:14:08Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createJsonArrayRequestBody -->
-        <test-method status="PASS" signature="Closure()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@cb644e]" name="Closure" is-config="true" duration-ms="0" started-at="2018-10-27T18:08:22Z" finished-at="2018-10-27T18:08:22Z">
+        <test-method status="PASS" signature="Closure()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@5649fd9b]" name="Closure" is-config="true" duration-ms="1" started-at="2018-10-28T08:14:08Z" finished-at="2018-10-28T08:14:08Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Closure -->

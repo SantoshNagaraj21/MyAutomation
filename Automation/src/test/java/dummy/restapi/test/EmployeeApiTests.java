@@ -1,5 +1,6 @@
 package dummy.restapi.test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
@@ -10,6 +11,9 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchOperation;
+import com.github.fge.jsonpatch.diff.JsonDiff;
 import com.jayway.jsonpath.JsonPath;
 
 import aut.framework.common.BaseAPITest;
@@ -28,23 +32,24 @@ public class EmployeeApiTests extends BaseAPITest {
 
 	public static SoftAssert softAssertion = new SoftAssert();
 
-	@Test
+	@Test(enabled = true)
 	public static void createEmployees() throws IOException, ParseException {
-		
+
 		logger = Logger.getLogger("createEmployees");
 
 		String createUrl = "/create";
 		String getUrl = "/employee";
 
-		// Creating First Employee Record		
-		logger.info("Creating Employee from input JSON File");
+		// Creating First Employee Record
+		logger.info("INFO: Creating Employee from input JSON File\n");
 
 		String RequestBody = CommonAPIUtils.getFile(filepath, "createEmployee.json");
 
-		String expempname = JsonPath.read(RequestBody, "$.name");
+		String expempname = CommonAPIUtils.getValueFromJSON(RequestBody, ".name");
 
 		Response ResponseBody = CommonAPIUtils.runRequest("POST", baseUrl + createUrl, RequestBody, 200,
-				"User:Santosh");
+				"HEADER:X-Tenant-ID:dhin", "HEADER:Content-Type:application/json", "AUTH:Santosh:Test",
+				"URLENCODE:Enabled:false");
 
 		int returncode = ResponseBody.getStatusCode();
 		String respBody = ResponseBody.getBody().asString();
@@ -55,8 +60,8 @@ public class EmployeeApiTests extends BaseAPITest {
 		softAssertion.assertTrue(CommonAPIUtils.checkStatus("POST", baseUrl + createUrl, returncode, 200));
 		softAssertion.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + createUrl, expempname, rempname));
 
-		// Creating Second Employee Record		
-		logger.info("Creating Employee from Request Body function");
+		// Creating Second Employee Record
+		logger.info("INFO: Creating Employee from Request Body function\n");
 
 		String RequestBody1 = CommonAPIUtils.createRequestBody("name:Santoshtest1", "salary:123", "age:23");
 
@@ -74,8 +79,8 @@ public class EmployeeApiTests extends BaseAPITest {
 		softAssertion.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + createUrl, rempname1, expempname1));
 		softAssertion.assertTrue(CommonAPIUtils.checkValuesNotEqual("POST", baseUrl + createUrl, rempID, rempID1));
 
-		// Get the First Created Employee Record		
-		logger.info("Get the first Created Employee Record");
+		// Get the First Created Employee Record
+		logger.info("INFO: Get the first Created Employee Record\n");
 
 		Response ResponseBody2 = CommonAPIUtils.runRequest("GET", baseUrl + getUrl + "/" + rempID, null, 200);
 
@@ -86,7 +91,8 @@ public class EmployeeApiTests extends BaseAPITest {
 		String rempname2 = JsonPath.read(respBody2, "$.employee_name");
 
 		softAssertion.assertTrue(CommonAPIUtils.checkStatus("POST", baseUrl + getUrl + "/" + rempID, returncode2, 200));
-		softAssertion.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + getUrl + "/" + rempID, rempname2, expempname));
+		softAssertion
+				.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + getUrl + "/" + rempID, rempname2, expempname));
 		softAssertion.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + getUrl + "/" + rempID, rempID, rempID2));
 
 		softAssertion.assertAll();
@@ -111,6 +117,26 @@ public class EmployeeApiTests extends BaseAPITest {
 		JSONArray jsonobjArrays = CommonAPIUtils.createJsonArrayRequestBody(request, request1);
 
 		System.out.println("JSON Obj Array " + jsonobjArrays);
+
+	}
+
+	@Test(enabled = false)
+	public static void patchJsonTest() throws FileNotFoundException, IOException, ParseException {
+
+		// Creating First Employee Record
+//		logger.info("INFO: Patching a JSON File\n");
+
+		String RequestBody = CommonAPIUtils.getFile(filepath, "createEmployee.json");
+
+		JSONObject request = CommonAPIUtils.createJsonObject("name:Santoshtest", "salary:123", "age:23");
+
+		JSONArray jsonArrays = CommonAPIUtils
+				.createArrayRequestBody("op: replace", "path: name", "value: patchTest");
+
+		System.out.println("Patch JSON " + jsonArrays);
+		System.out.println("Source JSON  " + request + "\n " +  RequestBody);
+
+//		final JsonPatch patch = JsonDiff.asJson(jsonArrays, request);
 
 	}
 

@@ -8,8 +8,9 @@ public class TestNGListeners implements ITestListener {
 
 	@Override
 	public void onTestStart(ITestResult result) {
-		// TODO Auto-generated method stub
-
+		
+		System.out.println("Tests started for : " + result.getName());
+		System.out.println("---------------------------------------------------------");
 	}
 
 	@Override
@@ -17,21 +18,21 @@ public class TestNGListeners implements ITestListener {
 		// TODO Auto-generated method stub
 
 		System.out.println("All Test PASSED for: " + result.getName());
-//		System.out.println("exit code: 0");
+		System.out.println("---------------------------------------------------------");
 
 	}
 
 	@Override
 	public void onTestFailure(ITestResult result) {
 
-//		Throwable thrown = result.getThrowable();
-//
-//		StackTraceElement[] outTrace = new StackTraceElement[0];
-//
-//		thrown.setStackTrace(outTrace);
+		Throwable thrown = result.getThrowable();
+
+		StackTraceElement[] outTrace = new StackTraceElement[0];
+
+		thrown.setStackTrace(outTrace);
 
 		System.out.println("Tests Failed for: " + result.getName());
-//		System.out.println("exit code: 1");
+		System.out.println("---------------------------------------------------------");
 
 	}
 
@@ -49,13 +50,17 @@ public class TestNGListeners implements ITestListener {
 
 	@Override
 	public void onStart(ITestContext context) {
-		// TODO Auto-generated method stub
+
+		System.out.println("Test Suite Started");
+		System.out.println("---------------------------------------------------------");
 
 	}
 
 	@Override
 	public void onFinish(ITestContext context) {
-		// TODO Auto-generated method stub
+		
+		System.out.println("Test Suite Ended");
+		System.out.println("---------------------------------------------------------");
 
 	}
 

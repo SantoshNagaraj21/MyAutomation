@@ -1,3 +1,6 @@
-2018-10-27 23:38:18,255  INFO [main] createEmployees:40 - Creating Employee from input JSON File
-2018-10-27 23:38:20,691  INFO [main] createEmployees:59 - Creating Employee from Request Body function
-2018-10-27 23:38:21,417  INFO [main] createEmployees:78 - Get the first Created Employee Record
+2018-10-28 13:44:03,933  INFO [main] createEmployees:44 - INFO: Creating Employee from input JSON File
+
+2018-10-28 13:44:06,435  INFO [main] createEmployees:64 - INFO: Creating Employee from Request Body function
+
+2018-10-28 13:44:07,151  INFO [main] createEmployees:83 - INFO: Get the first Created Employee Record
+
