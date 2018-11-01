@@ -17,7 +17,7 @@ import io.restassured.response.Response;
 
 @Listeners(aut.framework.common.TestNGListeners.class)
 
-public class EmployeeApiTests extends BaseAPITest {
+public class EmployeeApiTests2 extends BaseAPITest {
 
 	static Logger logger;
 

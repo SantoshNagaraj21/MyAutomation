@@ -16,6 +16,9 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import org.testng.xml.ISuiteParser;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flipkart.zjsonpatch.JsonPatch;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -33,11 +36,15 @@ public class CommonAPIUtils {
 
 	public static final String filepath = "\\src\\test\\resources\\test-data";
 
-	static Date date = new Date();
+	static Date date = null;
+
+	static long testCaseNo = 0;
 
 	static SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
 
 	public static Response runRequest(Object... params) {
+
+		testCaseNo = testCaseNo + 1;
 
 		String RequestBody = null;
 
@@ -99,9 +106,11 @@ public class CommonAPIUtils {
 
 		}
 
+		date = new Date();
+
 		System.out.println(formatter.format(date) + "\n");
 
-		System.out.println(RequestType + " " + RequestURL + "\n");
+		System.out.println(testCaseNo + ". " + RequestType + " " + RequestURL + "\n");
 
 		if (RequestType == "GET") {
 
@@ -192,11 +201,15 @@ public class CommonAPIUtils {
 
 	public static boolean checkValues(String requestType, String URL, String expattribute, String actualattribute) {
 
+		testCaseNo = testCaseNo + 1;
+
+		date = new Date();
+
 		System.out.println(formatter.format(date) + "\n");
 
 		if (expattribute.equals(actualattribute)) {
 
-			System.out.println(requestType + " " + URL + "\n");
+			System.out.println(testCaseNo + ". " + requestType + " " + URL + "\n");
 			System.out.println("Expected Value : " + expattribute);
 			System.out.println("Actual Value   : " + actualattribute + "\n");
 			System.out.println("Expected and Actual Value Matches\n");
@@ -205,7 +218,7 @@ public class CommonAPIUtils {
 
 		} else {
 
-			System.out.println(requestType + " " + URL + "\n");
+			System.out.println(testCaseNo + ". " + requestType + " " + URL + "\n");
 			System.out.println("Expected Value : " + expattribute);
 			System.out.println("Actual Value   : " + actualattribute + "\n");
 			System.out.println("Expected and Actual Value Doesn't Match\n");
@@ -220,11 +233,15 @@ public class CommonAPIUtils {
 	public static boolean checkValuesNotEqual(String requestType, String URL, String expattribute,
 			String actualattribute) {
 
+		testCaseNo = testCaseNo + 1;
+
+		date = new Date();
+
 		System.out.println(formatter.format(date) + "\n");
 
 		if (expattribute.equals(actualattribute)) {
 
-			System.out.println(requestType + " " + URL + " ");
+			System.out.println(testCaseNo + ". " + requestType + " " + URL + " ");
 			System.out.println("Expected Value : " + expattribute);
 			System.out.println("Actual Value   : " + actualattribute + "\n");
 			System.out.println("Expected and Actual Value Matches\n");
@@ -233,7 +250,7 @@ public class CommonAPIUtils {
 
 		} else {
 
-			System.out.println(requestType + " " + URL + " ");
+			System.out.println(testCaseNo + ". " + requestType + " " + URL + " ");
 			System.out.println("Expected Value : " + expattribute);
 			System.out.println("Actual Value   : " + actualattribute + "\n");
 			System.out.println("Expected and Actual Value Doesn't Match\n");
@@ -300,7 +317,7 @@ public class CommonAPIUtils {
 
 	}
 
-	public static JSONArray createArrayRequestBody(Object... requestparams) {
+	public static String createArrayRequestBody(Object... requestparams) {
 
 		JSONArray jsonArray = new JSONArray();
 
@@ -321,11 +338,12 @@ public class CommonAPIUtils {
 
 		jsonArray.put(requestBody);
 
-		return jsonArray;
+		String jsonArrayString = jsonArray.toString();
 
+		return jsonArrayString;
 	}
 
-	public static JSONObject createJsonObject(Object... requestparams) {
+	public static String createJsonObject(Object... requestparams) {
 
 		JSONObject requestBody = new JSONObject();
 
@@ -342,11 +360,13 @@ public class CommonAPIUtils {
 
 		}
 
-		return requestBody;
+		String requestBodyString = requestBody.toString();
+
+		return requestBodyString;
 
 	}
 
-	public static JSONArray createJsonArrayRequestBody(JSONObject... requestparams) {
+	public static String createJsonArrayRequestBody(String... requestparams) {
 
 		JSONArray jsonArray = new JSONArray();
 
@@ -358,10 +378,12 @@ public class CommonAPIUtils {
 
 		}
 
-		return jsonArray;
+		String jsonArrayString = jsonArray.toString();
+
+		return jsonArrayString;
 
 	}
-	
+
 	public static String getFile(String filepath, String filename)
 			throws FileNotFoundException, IOException, ParseException {
 
@@ -382,6 +404,18 @@ public class CommonAPIUtils {
 
 	}
 
+	public static String patchJson(String patchString, String SourceString) throws IOException {
 
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode patchObj = mapper.readTree(patchString);
+		JsonNode sourceObj = mapper.readTree(SourceString);
+
+		JsonNode patchSource = JsonPatch.apply(patchObj, sourceObj);
+
+		String sourceString = patchSource.toString();
+
+		return sourceString;
+
+	}
 
 }

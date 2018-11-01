@@ -8,7 +8,7 @@ public class TestNGListeners implements ITestListener {
 
 	@Override
 	public void onTestStart(ITestResult result) {
-		
+
 		System.out.println("Tests started for : " + result.getName());
 		System.out.println("---------------------------------------------------------");
 	}
@@ -25,11 +25,11 @@ public class TestNGListeners implements ITestListener {
 	@Override
 	public void onTestFailure(ITestResult result) {
 
-		Throwable thrown = result.getThrowable();
-
-		StackTraceElement[] outTrace = new StackTraceElement[0];
-
-		thrown.setStackTrace(outTrace);
+//		Throwable thrown = result.getThrowable();
+//
+//		StackTraceElement[] outTrace = new StackTraceElement[0];
+//
+//		thrown.setStackTrace(outTrace);
 
 		System.out.println("Tests Failed for: " + result.getName());
 		System.out.println("---------------------------------------------------------");
@@ -51,7 +51,11 @@ public class TestNGListeners implements ITestListener {
 	@Override
 	public void onStart(ITestContext context) {
 
-		System.out.println("Test Suite Started");
+		System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		
+		String suiteName = context.getCurrentXmlTest().getSuite().getName();
+
+		System.out.println("Test Suite Started for " + suiteName);
 		System.out.println("---------------------------------------------------------");
 
 	}
@@ -59,7 +63,9 @@ public class TestNGListeners implements ITestListener {
 	@Override
 	public void onFinish(ITestContext context) {
 		
-		System.out.println("Test Suite Ended");
+		String suiteName = context.getCurrentXmlTest().getSuite().getName();
+
+		System.out.println("Test Suite Ended for " + suiteName);
 		System.out.println("---------------------------------------------------------");
 
 	}

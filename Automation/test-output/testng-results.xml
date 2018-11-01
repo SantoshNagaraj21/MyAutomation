@@ -1,33 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="1" total="4" passed="3">
+<testng-results skipped="0" failed="0" ignored="6" total="10" passed="4">
   <reporter-output>
   </reporter-output>
-  <suite name="EmployeeApiTestSuites" duration-ms="4212" started-at="2018-10-28T08:14:03Z" finished-at="2018-10-28T08:14:08Z">
+  <suite name="DummyApiTestSuites" duration-ms="8344" started-at="2018-11-01T17:08:08Z" finished-at="2018-11-01T17:08:16Z">
     <groups>
     </groups>
-    <test name="EmployeeApiTests" duration-ms="4212" started-at="2018-10-28T08:14:03Z" finished-at="2018-10-28T08:14:08Z">
-      <class name="dummy.restapi.test.EmployeeApiTests">
-        <test-method status="PASS" signature="InitialSetup()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@5649fd9b]" name="InitialSetup" is-config="true" duration-ms="64" started-at="2018-10-28T08:14:03Z" finished-at="2018-10-28T08:14:03Z">
+    <test name="ApiTests" duration-ms="8344" started-at="2018-11-01T17:08:08Z" finished-at="2018-11-01T17:08:16Z">
+      <class name="dummy.restapi.test.EmployeeApiTests2">
+        <test-method status="PASS" signature="InitialSetup()[pri:0, instance:dummy.restapi.test.EmployeeApiTests2@29ca901e]" name="InitialSetup" is-config="true" duration-ms="5" started-at="2018-11-01T17:08:13Z" finished-at="2018-11-01T17:08:13Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- InitialSetup -->
-        <test-method status="PASS" signature="createEmployees()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@5649fd9b]" name="createEmployees" duration-ms="4049" started-at="2018-10-28T08:14:03Z" finished-at="2018-10-28T08:14:07Z">
+        <test-method status="PASS" signature="createEmployees()[pri:0, instance:dummy.restapi.test.EmployeeApiTests2@29ca901e]" name="createEmployees" duration-ms="2209" started-at="2018-11-01T17:08:13Z" finished-at="2018-11-01T17:08:15Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createEmployees -->
-        <test-method status="PASS" signature="createArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@5649fd9b]" name="createArrayRequestBody" duration-ms="6" started-at="2018-10-28T08:14:07Z" finished-at="2018-10-28T08:14:07Z">
+        <test-method status="PASS" signature="createArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests2@29ca901e]" name="createArrayRequestBody" duration-ms="934" started-at="2018-11-01T17:08:15Z" finished-at="2018-11-01T17:08:16Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createArrayRequestBody -->
-        <test-method status="PASS" signature="createJsonArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@5649fd9b]" name="createJsonArrayRequestBody" duration-ms="3" started-at="2018-10-28T08:14:08Z" finished-at="2018-10-28T08:14:08Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- createJsonArrayRequestBody -->
-        <test-method status="PASS" signature="Closure()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@5649fd9b]" name="Closure" is-config="true" duration-ms="1" started-at="2018-10-28T08:14:08Z" finished-at="2018-10-28T08:14:08Z">
+        <test-method status="PASS" signature="Closure()[pri:0, instance:dummy.restapi.test.EmployeeApiTests2@29ca901e]" name="Closure" is-config="true" duration-ms="1" started-at="2018-11-01T17:08:16Z" finished-at="2018-11-01T17:08:16Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Closure -->
+      </class> <!-- dummy.restapi.test.EmployeeApiTests2 -->
+      <class name="dummy.restapi.test.EmployeeApiTests">
+        <test-method status="PASS" signature="StartSuite(org.testng.ITestContext)[pri:0, instance:dummy.restapi.test.EmployeeApiTests@4bec1f0c]" name="StartSuite" is-config="true" duration-ms="18" started-at="2018-11-01T17:08:08Z" finished-at="2018-11-01T17:08:08Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@64c2b546]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- StartSuite -->
+        <test-method status="PASS" signature="InitialSetup()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@4bec1f0c]" name="InitialSetup" is-config="true" duration-ms="49" started-at="2018-11-01T17:08:08Z" finished-at="2018-11-01T17:08:08Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitialSetup -->
+        <test-method status="PASS" signature="createEmployees()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@4bec1f0c]" name="createEmployees" duration-ms="4151" started-at="2018-11-01T17:08:08Z" finished-at="2018-11-01T17:08:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createEmployees -->
+        <test-method status="PASS" signature="createArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@4bec1f0c]" name="createArrayRequestBody" duration-ms="886" started-at="2018-11-01T17:08:12Z" finished-at="2018-11-01T17:08:13Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createArrayRequestBody -->
+        <test-method status="PASS" signature="Closure()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@4bec1f0c]" name="Closure" is-config="true" duration-ms="1" started-at="2018-11-01T17:08:13Z" finished-at="2018-11-01T17:08:13Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Closure -->
+        <test-method status="PASS" signature="EndSuite(org.testng.ITestContext)[pri:0, instance:dummy.restapi.test.EmployeeApiTests@4bec1f0c]" name="EndSuite" is-config="true" duration-ms="11" started-at="2018-11-01T17:08:16Z" finished-at="2018-11-01T17:08:16Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@64c2b546]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- EndSuite -->
       </class> <!-- dummy.restapi.test.EmployeeApiTests -->
-    </test> <!-- EmployeeApiTests -->
-  </suite> <!-- EmployeeApiTestSuites -->
+    </test> <!-- ApiTests -->
+  </suite> <!-- DummyApiTestSuites -->
 </testng-results>

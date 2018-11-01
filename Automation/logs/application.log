@@ -1,6 +1,8 @@
-2018-10-28 13:44:03,933  INFO [main] createEmployees:44 - INFO: Creating Employee from input JSON File
+2018-11-01 22:38:13,662  INFO [main] createEmployees:39 - INFO: Creating Employee from input JSON File
 
-2018-10-28 13:44:06,435  INFO [main] createEmployees:64 - INFO: Creating Employee from Request Body function
+2018-11-01 22:38:14,348  INFO [main] createEmployees:59 - INFO: Creating Employee from Request Body function
 
-2018-10-28 13:44:07,151  INFO [main] createEmployees:83 - INFO: Get the first Created Employee Record
+2018-11-01 22:38:15,066  INFO [main] createEmployees:78 - INFO: Get the first Created Employee Record
+
+2018-11-01 22:38:15,880  INFO [main] createArrayRequestBody:103 - INFO: Run RunRequest in a separate Method
 

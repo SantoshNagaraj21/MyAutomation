@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+Test Suite Started for DummyApiTestSuites
+---------------------------------------------------------
+Tests started for : createEmployees
+---------------------------------------------------------
+INFO: Creating Employee from input JSON File
+
+	Thu, 01 Nov 2018 22:38:09 IST
+
+1. POST http://dummy.restapiexample.com/api/v1/create
+
+Headers:		X-Tenant-ID=dhin
+				Authorization=Basic U2FudG9zaDpUZXN0
+				Accept=*/*
+				Content-Type=application/json; charset=UTF-8
+Expected Status Code : 200
+
+RequestBody: 
+{
+  "name": "Santoshtest1",
+  "salary": "123",
+  "age": "23"
+}
+
+Actual Status Code : 200
+
+ResponseBody: 
+{
+  "name": "Santoshtest1",
+  "salary": "123",
+  "age": "23",
+  "id": "359"
+}
+
+Expected and Actual Status Code Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:11 IST
+
+2. POST http://dummy.restapiexample.com/api/v1/create
+
+Expected Value : Santoshtest1
+Actual Value   : Santoshtest1
+
+Expected and Actual Value Matches
+
+exit code: 0
+
+INFO: Creating Employee from Request Body function
+
+	Thu, 01 Nov 2018 22:38:11 IST
+
+3. POST http://dummy.restapiexample.com/api/v1/create
+
+Headers:		Accept=*/*
+				Content-Type=application/json; charset=UTF-8
+Expected Status Code : 200
+
+RequestBody: 
+{
+  "name": "Santoshtest1",
+  "salary": "123",
+  "age": "23"
+}
+
+Actual Status Code : 200
+
+ResponseBody: 
+{
+  "name": "Santoshtest1",
+  "salary": "123",
+  "age": "23",
+  "id": "360"
+}
+
+Expected and Actual Status Code Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:11 IST
+
+4. POST http://dummy.restapiexample.com/api/v1/create
+
+Expected Value : Santoshtest1
+Actual Value   : Santoshtest1
+
+Expected and Actual Value Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:11 IST
+
+5. POST http://dummy.restapiexample.com/api/v1/create 
+Expected Value : 359
+Actual Value   : 360
+
+Expected and Actual Value Doesn't Match
+
+exit code: 0
+
+INFO: Get the first Created Employee Record
+
+	Thu, 01 Nov 2018 22:38:11 IST
+
+6. GET http://dummy.restapiexample.com/api/v1/employee/359
+
+Headers:		Accept=*/*
+Expected Status Code : 200
+
+RequestBody: 
+null
+
+Actual Status Code : 200
+
+ResponseBody: 
+{
+  "id": "359",
+  "employee_name": "Santoshtest1",
+  "employee_salary": "123",
+  "employee_age": "23",
+  "profile_image": ""
+}
+
+Expected and Actual Status Code Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:12 IST
+
+7. POST http://dummy.restapiexample.com/api/v1/employee/359
+
+Expected Value : Santoshtest1
+Actual Value   : Santoshtest1
+
+Expected and Actual Value Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:12 IST
+
+8. POST http://dummy.restapiexample.com/api/v1/employee/359
+
+Expected Value : 359
+Actual Value   : 359
+
+Expected and Actual Value Matches
+
+exit code: 0
+
+All Test PASSED for: createEmployees
+---------------------------------------------------------
+Tests started for : createArrayRequestBody
+---------------------------------------------------------
+INFO: Run RunRequest in a separate Method
+
+	Thu, 01 Nov 2018 22:38:12 IST
+
+9. GET http://dummy.restapiexample.com/api/v1/employee/66
+
+Headers:		Accept=*/*
+Expected Status Code : 200
+
+RequestBody: 
+null
+
+Actual Status Code : 200
+
+ResponseBody: 
+{
+  "id": "66",
+  "employee_name": "",
+  "employee_salary": "0",
+  "employee_age": "0",
+  "profile_image": ""
+}
+
+Expected and Actual Status Code Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:13 IST
+
+10. POST http://dummy.restapiexample.com/api/v1/employee/66
+
+Expected Value : test
+Actual Value   : 
+
+Expected and Actual Value Doesn't Match
+
+exit code: 1
+
+Thu, 01 Nov 2018 22:38:13 IST
+
+11. POST http://dummy.restapiexample.com/api/v1/employee/66
+
+Expected Value : 66
+Actual Value   : 66
+
+Expected and Actual Value Matches
+
+exit code: 0
+
+JSON Array [{"name":"Santoshtest","salary":"123","age":"23"}]
+All Test PASSED for: createArrayRequestBody
+---------------------------------------------------------
+Tests started for : createEmployees
+---------------------------------------------------------
+INFO: Creating Employee from input JSON File
+
+	Thu, 01 Nov 2018 22:38:13 IST
+
+12. POST http://dummy.restapiexample.com/api/v1/create
+
+Headers:		X-Tenant-ID=dhin
+				Authorization=Basic U2FudG9zaDpUZXN0
+				Accept=*/*
+				Content-Type=application/json; charset=UTF-8
+Expected Status Code : 200
+
+RequestBody: 
+{
+  "name": "Santoshtest1",
+  "salary": "123",
+  "age": "23"
+}
+
+Actual Status Code : 200
+
+ResponseBody: 
+{
+  "name": "Santoshtest1",
+  "salary": "123",
+  "age": "23",
+  "id": "361"
+}
+
+Expected and Actual Status Code Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:14 IST
+
+13. POST http://dummy.restapiexample.com/api/v1/create
+
+Expected Value : Santoshtest1
+Actual Value   : Santoshtest1
+
+Expected and Actual Value Matches
+
+exit code: 0
+
+INFO: Creating Employee from Request Body function
+
+	Thu, 01 Nov 2018 22:38:14 IST
+
+14. POST http://dummy.restapiexample.com/api/v1/create
+
+Headers:		Accept=*/*
+				Content-Type=application/json; charset=UTF-8
+Expected Status Code : 200
+
+RequestBody: 
+{
+  "name": "Santoshtest1",
+  "salary": "123",
+  "age": "23"
+}
+
+Actual Status Code : 200
+
+ResponseBody: 
+{
+  "name": "Santoshtest1",
+  "salary": "123",
+  "age": "23",
+  "id": "362"
+}
+
+Expected and Actual Status Code Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:15 IST
+
+15. POST http://dummy.restapiexample.com/api/v1/create
+
+Expected Value : Santoshtest1
+Actual Value   : Santoshtest1
+
+Expected and Actual Value Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:15 IST
+
+16. POST http://dummy.restapiexample.com/api/v1/create 
+Expected Value : 361
+Actual Value   : 362
+
+Expected and Actual Value Doesn't Match
+
+exit code: 0
+
+INFO: Get the first Created Employee Record
+
+	Thu, 01 Nov 2018 22:38:15 IST
+
+17. GET http://dummy.restapiexample.com/api/v1/employee/361
+
+Headers:		Accept=*/*
+Expected Status Code : 200
+
+RequestBody: 
+null
+
+Actual Status Code : 200
+
+ResponseBody: 
+{
+  "id": "361",
+  "employee_name": "Santoshtest1",
+  "employee_salary": "123",
+  "employee_age": "23",
+  "profile_image": ""
+}
+
+Expected and Actual Status Code Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:15 IST
+
+18. POST http://dummy.restapiexample.com/api/v1/employee/361
+
+Expected Value : Santoshtest1
+Actual Value   : Santoshtest1
+
+Expected and Actual Value Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:15 IST
+
+19. POST http://dummy.restapiexample.com/api/v1/employee/361
+
+Expected Value : 361
+Actual Value   : 361
+
+Expected and Actual Value Matches
+
+exit code: 0
+
+All Test PASSED for: createEmployees
+---------------------------------------------------------
+Tests started for : createArrayRequestBody
+---------------------------------------------------------
+INFO: Run RunRequest in a separate Method
+
+	Thu, 01 Nov 2018 22:38:15 IST
+
+20. GET http://dummy.restapiexample.com/api/v1/employee/66
+
+Headers:		Accept=*/*
+Expected Status Code : 200
+
+RequestBody: 
+null
+
+Actual Status Code : 200
+
+ResponseBody: 
+{
+  "id": "66",
+  "employee_name": "",
+  "employee_salary": "0",
+  "employee_age": "0",
+  "profile_image": ""
+}
+
+Expected and Actual Status Code Matches
+
+exit code: 0
+
+Thu, 01 Nov 2018 22:38:16 IST
+
+21. POST http://dummy.restapiexample.com/api/v1/employee/66
+
+Expected Value : test
+Actual Value   : 
+
+Expected and Actual Value Doesn't Match
+
+exit code: 1
+
+Thu, 01 Nov 2018 22:38:16 IST
+
+22. POST http://dummy.restapiexample.com/api/v1/employee/66
+
+Expected Value : 66
+Actual Value   : 66
+
+Expected and Actual Value Matches
+
+exit code: 0
+
+JSON Array [{"name":"Santoshtest","salary":"123","age":"23"}]
+All Test PASSED for: createArrayRequestBody
+---------------------------------------------------------
+Test Suite Ended for DummyApiTestSuites
+---------------------------------------------------------
