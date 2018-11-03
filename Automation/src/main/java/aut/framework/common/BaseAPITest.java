@@ -23,12 +23,25 @@ public class BaseAPITest extends CommonUtils {
 
 	@BeforeClass
 	public void InitialSetup() throws IOException {
+		
+		String ClassName = this.getClass().getSimpleName();
+		
+		System.out.println("---------------------------------------------------------");
+		System.out.println("Running Tests for: " + ClassName);
+		System.out.println("---------------------------------------------------------");
 
 		PropertyConfigurator.configure("./" + "\\src\\main\\resources\\common\\log4j.properties");
 	}
 
 	@AfterClass
 	public void Closure() throws IOException {
+		
+		String ClassName = this.getClass().getSimpleName();
+		
+		System.out.println("---------------------------------------------------------");
+		System.out.println("Finished running Tests for: " + ClassName);
+		System.out.println("---------------------------------------------------------");
+
 
 	}
 
@@ -57,7 +70,7 @@ public class BaseAPITest extends CommonUtils {
 
 //		String ClassName = this.getClass().getSimpleName();
 
-		System.out.println("Suite Name: " + suiteName);
+//		System.out.println("Suite Name: " + suiteName);
 
 		System.out.println(new String(Files.readAllBytes(Paths.get("./" + "\\test-results\\" + suiteName + ".xml"))));
 

@@ -25,18 +25,18 @@ public class EmployeeApiTests2 extends BaseAPITest {
 
 	public static final String baseUrl = "http://dummy.restapiexample.com/api/v1";
 
-	public static SoftAssert softAssertion = new SoftAssert();
-
 	static String createUrl = "/create";
 	static String getUrl = "/employee";
 
 	@Test(enabled = true)
 	public static void createEmployees() throws IOException, ParseException {
+		
+		SoftAssert softAssertion = new SoftAssert();
 
 		logger = Logger.getLogger("createEmployees");
 
 		// Creating First Employee Record
-		logger.info("INFO: Creating Employee from input JSON File\n");
+		logger.info("INFO: Creating Employee from input JSON File");
 
 		String RequestBody = CommonAPIUtils.getFile(filepath, "createEmployee.json");
 
@@ -90,19 +90,21 @@ public class EmployeeApiTests2 extends BaseAPITest {
 				.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + getUrl + "/" + rempID, rempname2, expempname));
 		softAssertion.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + getUrl + "/" + rempID, rempID, rempID2));
 
-//		softAssertion.assertAll();
+		softAssertion.assertAll();
 
 	}
 
 	@Test(enabled = true)
 	public static void createArrayRequestBody() {
+		
+		SoftAssert softAssertion = new SoftAssert();
 
 		logger = Logger.getLogger("createArrayRequestBody");
 
 		// Creating First Employee Record
-		logger.info("INFO: Run RunRequest in a separate Method\n");
+		logger.info("INFO: Run RunRequest in a separate Method");
 
-		Response ResponseBody2 = CommonAPIUtils.runRequest("GET", baseUrl + getUrl + "/66", null, 200);
+		Response ResponseBody2 = CommonAPIUtils.runRequest("GET", baseUrl + getUrl + "/70", null, 200);
 
 		int returncode2 = ResponseBody2.getStatusCode();
 		String respBody2 = ResponseBody2.getBody().asString();
@@ -110,18 +112,22 @@ public class EmployeeApiTests2 extends BaseAPITest {
 		String rempID2 = JsonPath.read(respBody2, "$.id");
 		String rempname2 = JsonPath.read(respBody2, "$.employee_name");
 
-		softAssertion.assertTrue(CommonAPIUtils.checkStatus("POST", baseUrl + getUrl + "/66", returncode2, 200));
-		softAssertion.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + getUrl + "/66", "test", rempname2));
-		softAssertion.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + getUrl + "/66", "66", rempID2));
+		softAssertion.assertTrue(CommonAPIUtils.checkStatus("POST", baseUrl + getUrl + "/70", returncode2, 200));
+		softAssertion.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + getUrl + "/70", "test", rempname2));
+		softAssertion.assertTrue(CommonAPIUtils.checkValues("POST", baseUrl + getUrl + "/70", "70", rempID2));
 
 		String jsonArrays = CommonAPIUtils.createArrayRequestBody("name:Santoshtest", "salary:123", "age:23");
 
 		System.out.println("JSON Array " + jsonArrays);
 
+		softAssertion.assertAll();
+
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public static void createJsonArrayRequestBody() {
+		
+		SoftAssert softAssertion = new SoftAssert();
 
 		String request = CommonAPIUtils.createJsonObject("name:Santoshtest", "salary:123", "age:23");
 		String request1 = CommonAPIUtils.createJsonObject("name:Santoshtest", "salary:123", "age:23");
@@ -130,12 +136,14 @@ public class EmployeeApiTests2 extends BaseAPITest {
 
 		System.out.println("JSON Obj Array " + jsonobjArrays);
 
-//		softAssertion.assertAll();
+		softAssertion.assertAll();
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public static void patchJsonTest() throws FileNotFoundException, IOException, ParseException {
+		
+		SoftAssert softAssertion = new SoftAssert();
 
 		// Creating First Employee Record
 		logger.info("INFO: Patching a JSON File\n");
@@ -146,14 +154,16 @@ public class EmployeeApiTests2 extends BaseAPITest {
 
 		String jsonArrays = CommonAPIUtils.createArrayRequestBody("op:replace", "path:/name", "value:patchTest");
 
-		System.out.println("Patch JSON " + jsonArrays);
-		System.out.println("Source JSON  " + request + "\n " + RequestBody);
+		System.out.println("\nPatch JSON " + jsonArrays);
+		System.out.println("Source JSON  " + RequestBody);
 
 		System.out.println("----------------------------------------");
 
 		String patchOut = CommonAPIUtils.patchJson(jsonArrays, RequestBody);
 
 		System.out.println("JSON After Patching \n" + patchOut);
+
+		softAssertion.assertAll();
 
 	}
 

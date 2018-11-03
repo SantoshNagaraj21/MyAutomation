@@ -2,10 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.set.fusion.automation</groupId>
+	<groupId>aut.framework.common</groupId>
 	<artifactId>Automation</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<name>set.fusion.automation</name>
+	<name>automation</name>
 	<description>set fusion automation using Selenium, Rest Assured, eclipse, TestNG, Maven and Jenkins</description>
 	<dependencies>
 		<dependency>
@@ -49,12 +49,6 @@
 			<artifactId>selenium-chrome-driver</artifactId>
 			<version>3.14.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports -->
-		<dependency>
-			<groupId>com.relevantcodes</groupId>
-			<artifactId>extentreports</artifactId>
-			<version>2.41.2</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>
@@ -75,12 +69,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.5</version>
+			<version>1.7.7</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/javassist/javassist -->
 		<dependency>
@@ -93,6 +82,21 @@
 			<groupId>com.flipkart.zjsonpatch</groupId>
 			<artifactId>zjsonpatch</artifactId>
 			<version>0.4.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.dzieciou.testing</groupId>
+			<artifactId>curl-logger</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.1.2</version>
 		</dependency>
 
 	</dependencies>

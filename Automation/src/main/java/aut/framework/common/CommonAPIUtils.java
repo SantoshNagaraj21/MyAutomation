@@ -12,13 +12,16 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.asserts.SoftAssert;
-import org.testng.xml.ISuiteParser;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flipkart.zjsonpatch.JsonPatch;
+import com.github.dzieciou.testing.curl.CurlLoggingRestAssuredConfigFactory;
+import com.github.dzieciou.testing.curl.Options;
+import com.github.dzieciou.testing.curl.Platform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -27,12 +30,11 @@ import com.google.gson.JsonParser;
 import com.jayway.jsonpath.JsonPath;
 
 import io.restassured.RestAssured;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 public class CommonAPIUtils {
-
-	public static SoftAssert softAssertion = new SoftAssert();
 
 	public static final String filepath = "\\src\\test\\resources\\test-data";
 
@@ -43,6 +45,18 @@ public class CommonAPIUtils {
 	static SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
 
 	public static Response runRequest(Object... params) {
+
+//		System.setProperty("logback.configurationFile", "./" + "\\src\\main\\resources\\common\\logback.xml");
+
+		System.setProperty("log.name", "curl");
+
+		Logger log = LoggerFactory.getLogger(CommonAPIUtils.class);
+
+		Options options = Options.builder().targetPlatform(Platform.UNIX)
+				.updateCurl(curl -> curl.removeHeader("Host").removeHeader("User-Agent").removeHeader("Connection")
+						.setCompressed(false).setInsecure(false).setVerbose(false))
+				.useLongForm().printMultiliner().build();
+		RestAssuredConfig config = CurlLoggingRestAssuredConfigFactory.createConfig(options);
 
 		testCaseNo = testCaseNo + 1;
 
@@ -57,7 +71,8 @@ public class CommonAPIUtils {
 		Object expRespCode = params[3];
 
 		RestAssured.baseURI = RequestURL;
-		RequestSpecification request = RestAssured.given().log().headers();
+		RequestSpecification request = RestAssured.given().config(config).redirects().follow(false);
+//										.log().headers();
 //										.log().all(true);
 //										.log().method()
 //										.log().uri()
@@ -108,9 +123,11 @@ public class CommonAPIUtils {
 
 		date = new Date();
 
-		System.out.println(formatter.format(date) + "\n");
+		System.out.println("\n" + formatter.format(date) + "\n");
 
-		System.out.println(testCaseNo + ". " + RequestType + " " + RequestURL + "\n");
+		System.out.println("-------------------------------------------------------------------");
+		System.out.println(testCaseNo + ". " + RequestType + " " + RequestURL);
+		System.out.println("================================================================");
 
 		if (RequestType == "GET") {
 
@@ -142,7 +159,7 @@ public class CommonAPIUtils {
 
 		}
 
-		System.out.println("Expected Status Code : " + expRespCode + "\n");
+		System.out.println("\nExpected Status Code : " + expRespCode + "\n");
 
 		if (RequestBody != null) {
 
@@ -184,15 +201,17 @@ public class CommonAPIUtils {
 		if (expStatusCode == actStatusCode) {
 
 //			System.out.println(requestType + " " + URL + " ");
-			System.out.println("Expected and Actual Status Code Matches\n");
+			System.out.println("INFO: Expected and Actual Status Code Matches\n");
 			System.out.println("exit code: 0\n");
+			System.out.println("-------------------------------------------------------------------");
 			return true;
 
 		} else {
 
 //			System.out.println(requestType + " " + URL + " ");
-			System.out.println("Expected and Actual Status Code Doesn't Match\n");
+			System.out.println("INFO: Expected and Actual Status Code Doesn't Match\n");
 			System.out.println("exit code: 1\n");
+			System.out.println("-------------------------------------------------------------------");
 			return false;
 
 		}
@@ -209,21 +228,26 @@ public class CommonAPIUtils {
 
 		if (expattribute.equals(actualattribute)) {
 
-			System.out.println(testCaseNo + ". " + requestType + " " + URL + "\n");
-			System.out.println("Expected Value : " + expattribute);
+			System.out.println("-------------------------------------------------------------------");
+			System.out.println(testCaseNo + ". " + requestType + " " + URL);
+			System.out.println("================================================================");
+			System.out.println("\nExpected Value : " + expattribute);
 			System.out.println("Actual Value   : " + actualattribute + "\n");
-			System.out.println("Expected and Actual Value Matches\n");
+			System.out.println("INFO: Expected and Actual Value Matches\n");
 			System.out.println("exit code: 0\n");
+			System.out.println("-------------------------------------------------------------------");
 			return true;
 
 		} else {
 
-			System.out.println(testCaseNo + ". " + requestType + " " + URL + "\n");
-			System.out.println("Expected Value : " + expattribute);
+			System.out.println("-------------------------------------------------------------------");
+			System.out.println(testCaseNo + ". " + requestType + " " + URL);
+			System.out.println("================================================================");
+			System.out.println("\nExpected Value : " + expattribute);
 			System.out.println("Actual Value   : " + actualattribute + "\n");
-			System.out.println("Expected and Actual Value Doesn't Match\n");
+			System.out.println("INFO: Expected and Actual Value Doesn't Match\n");
 			System.out.println("exit code: 1\n");
-
+			System.out.println("-------------------------------------------------------------------");
 			return false;
 
 		}
@@ -242,20 +266,23 @@ public class CommonAPIUtils {
 		if (expattribute.equals(actualattribute)) {
 
 			System.out.println(testCaseNo + ". " + requestType + " " + URL + " ");
-			System.out.println("Expected Value : " + expattribute);
+			System.out.println("================================================================");
+			System.out.println("\nExpected Value : " + expattribute);
 			System.out.println("Actual Value   : " + actualattribute + "\n");
-			System.out.println("Expected and Actual Value Matches\n");
+			System.out.println("INFO: Expected and Actual Value Matches\n");
 			System.out.println("exit code: 1\n");
+			System.out.println("-------------------------------------------------------------------");
 			return false;
 
 		} else {
 
 			System.out.println(testCaseNo + ". " + requestType + " " + URL + " ");
-			System.out.println("Expected Value : " + expattribute);
+			System.out.println("================================================================");
+			System.out.println("\nExpected Value : " + expattribute);
 			System.out.println("Actual Value   : " + actualattribute + "\n");
-			System.out.println("Expected and Actual Value Doesn't Match\n");
+			System.out.println("INFO: Expected and Actual Value Doesn't Match\n");
 			System.out.println("exit code: 0\n");
-
+			System.out.println("-------------------------------------------------------------------");
 			return true;
 
 		}
@@ -374,7 +401,9 @@ public class CommonAPIUtils {
 
 		for (int i = 0; i < length; i++) {
 
-			jsonArray.put(requestparams[i]);
+			JSONObject jsonObj = new JSONObject(requestparams[i]);
+
+			jsonArray.put(jsonObj);
 
 		}
 
