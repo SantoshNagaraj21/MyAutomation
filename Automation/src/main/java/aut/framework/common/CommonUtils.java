@@ -16,23 +16,23 @@ public class CommonUtils {
 
 	public static void InitiateDriver() throws IOException {
 
-		String browserType = ReadProperties.getPropertyValue("browser", "\\src\\main\\resources\\common\\Config.Properties");
-		String geckopath = ReadProperties.getPropertyValue("GeckoDriverPath", "\\src\\main\\resources\\common\\Config.Properties");
+		String browserType = ReadProperties.getPropertyValue("browser", "/src/main/resources/common/Config.Properties");
+		String geckopath = ReadProperties.getPropertyValue("GeckoDriverPath", "/src/main/resources/common/Config.Properties");
 		String chromepath = ReadProperties.getPropertyValue("ChromeDriverPath",
-				"\\src\\main\\resources\\common\\Config.Properties");
+				"/src/main/resources/common/Config.Properties");
 
 		System.out.println("Browser Type is: " + browserType);
 		System.out.println("Driver Path is: " + geckopath);
 		System.out.println("Driver Path is: " + chromepath);
 
 		if (browserType.equalsIgnoreCase("Firefox")) {
-			System.setProperty("webdriver.gecko.driver", "./" + geckopath);
+			System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + geckopath);
 			System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE,"true");
 			System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"/dev/null");
 			driver = new FirefoxDriver();
 
 		} else if (browserType.equals("Chrome")) {
-			System.setProperty("webdriver.chrome.driver", "./" + chromepath);
+			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + chromepath);
 			driver = new ChromeDriver();
 
 		} else {
@@ -46,7 +46,7 @@ public class CommonUtils {
 
 	public static void LoadAndValidateURL(String urlTitle) throws IOException {
 
-		String url = ReadProperties.getPropertyValue("URL", "\\src\\main\\resources\\common\\Config.Properties");
+		String url = ReadProperties.getPropertyValue("URL", "/src/main/resources/common/Config.Properties");
 
 		System.out.println("URL is: " + url);
 
@@ -67,7 +67,7 @@ public class CommonUtils {
 	public static void waitforElement(By Data) throws NumberFormatException, IOException {
 
 		long defaultwait = Integer
-				.parseInt(ReadProperties.getPropertyValue("defaultwait", "\\src\\main\\resources\\common\\Config.Properties"));
+				.parseInt(ReadProperties.getPropertyValue("defaultwait", "/src/main/resources/common/Config.Properties"));
 
 		System.out.println("Default wait: " + defaultwait);
 

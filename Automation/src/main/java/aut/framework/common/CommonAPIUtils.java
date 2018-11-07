@@ -36,7 +36,7 @@ import io.restassured.specification.RequestSpecification;
 
 public class CommonAPIUtils {
 
-	public static final String filepath = "\\src\\test\\resources\\test-data";
+	public static final String filepath = "/src/test/resources/test-data";
 
 	static Date date = null;
 
@@ -46,7 +46,7 @@ public class CommonAPIUtils {
 
 	public static Response runRequest(Object... params) {
 
-//		System.setProperty("logback.configurationFile", "./" + "\\src\\main\\resources\\common\\logback.xml");
+//		System.setProperty("logback.configurationFile", "./" + "/src/main/resources/common/logback.xml");
 
 		System.setProperty("log.name", "curl");
 
@@ -416,7 +416,7 @@ public class CommonAPIUtils {
 	public static String getFile(String filepath, String filename)
 			throws FileNotFoundException, IOException, ParseException {
 
-		File file = new File("./" + filepath + "\\" + filename);
+		File file = new File(System.getProperty("user.dir") + filepath + "/" + filename);
 
 		JSONParser parser = new JSONParser();
 		String jsonString = parser.parse(new FileReader(file)).toString();

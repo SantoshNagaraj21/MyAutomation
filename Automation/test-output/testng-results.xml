@@ -2,30 +2,35 @@
 <testng-results skipped="0" failed="2" ignored="2" total="10" passed="6">
   <reporter-output>
   </reporter-output>
-  <suite name="DummyApiTestSuites" duration-ms="8753" started-at="2018-11-03T03:45:22Z" finished-at="2018-11-03T03:45:31Z">
+  <suite name="DummyApiTestSuites" duration-ms="9336" started-at="2018-11-07T08:44:20Z" finished-at="2018-11-07T08:44:30Z">
     <groups>
     </groups>
-    <test name="ApiTests" duration-ms="8753" started-at="2018-11-03T03:45:22Z" finished-at="2018-11-03T03:45:31Z">
-      <class name="dummy.restapi.test.EmployeeApiTests2">
-        <test-method status="PASS" signature="InitialSetup()[pri:0, instance:dummy.restapi.test.EmployeeApiTests2@72d818d1]" name="InitialSetup" is-config="true" duration-ms="2" started-at="2018-11-03T03:45:28Z" finished-at="2018-11-03T03:45:28Z">
+    <test name="ApiTests" duration-ms="9336" started-at="2018-11-07T08:44:20Z" finished-at="2018-11-07T08:44:30Z">
+      <class name="dummy.restapi.test.EmployeeApi2">
+        <test-method status="PASS" signature="InitialSetup()[pri:0, instance:dummy.restapi.test.EmployeeApi2@5700d6b1]" name="InitialSetup" is-config="true" duration-ms="2" started-at="2018-11-07T08:44:26Z" finished-at="2018-11-07T08:44:26Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- InitialSetup -->
-        <test-method status="PASS" signature="createEmployees()[pri:0, instance:dummy.restapi.test.EmployeeApiTests2@72d818d1]" name="createEmployees" duration-ms="2387" started-at="2018-11-03T03:45:28Z" finished-at="2018-11-03T03:45:30Z">
+        <test-method status="PASS" signature="createEmployees()[pri:0, instance:dummy.restapi.test.EmployeeApi2@5700d6b1]" name="createEmployees" duration-ms="2289" started-at="2018-11-07T08:44:26Z" finished-at="2018-11-07T08:44:28Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createEmployees -->
-        <test-method status="FAIL" signature="createArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests2@72d818d1]" name="createArrayRequestBody" duration-ms="864" started-at="2018-11-03T03:45:30Z" finished-at="2018-11-03T03:45:31Z">
-          <exception class="java.lang.AssertionError">
+        <test-method status="FAIL" signature="createArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApi2@5700d6b1]" name="createArrayRequestBody" duration-ms="1586" started-at="2018-11-07T08:44:28Z" finished-at="2018-11-07T08:44:30Z">
+          <exception class="com.jayway.jsonpath.PathNotFoundException">
             <message>
-              <![CDATA[The following asserts failed:
-expected [true] but found [false]]]>
+              <![CDATA[Expected to find an object with property ['id'] in path $ but found 'java.lang.Boolean'. This is not a json object according to the JsonProvider: 'com.jayway.jsonpath.spi.json.JsonSmartJsonProvider'.]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: The following asserts failed:
-expected [true] but found [false]
-at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:43)
-at dummy.restapi.test.EmployeeApiTests2.createArrayRequestBody(EmployeeApiTests2.java:123)
+              <![CDATA[com.jayway.jsonpath.PathNotFoundException: Expected to find an object with property ['id'] in path $ but found 'java.lang.Boolean'. This is not a json object according to the JsonProvider: 'com.jayway.jsonpath.spi.json.JsonSmartJsonProvider'.
+at com.jayway.jsonpath.internal.path.PropertyPathToken.evaluate(PropertyPathToken.java:69)
+at com.jayway.jsonpath.internal.path.RootPathToken.evaluate(RootPathToken.java:62)
+at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:53)
+at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:61)
+at com.jayway.jsonpath.JsonPath.read(JsonPath.java:187)
+at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:164)
+at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:147)
+at com.jayway.jsonpath.JsonPath.read(JsonPath.java:502)
+at dummy.restapi.test.EmployeeApi2.createArrayRequestBody(EmployeeApi2.java:113)
 at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -53,54 +58,59 @@ at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
+          </exception> <!-- com.jayway.jsonpath.PathNotFoundException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createArrayRequestBody -->
-        <test-method status="PASS" signature="createJsonArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests2@72d818d1]" name="createJsonArrayRequestBody" duration-ms="7" started-at="2018-11-03T03:45:31Z" finished-at="2018-11-03T03:45:31Z">
+        <test-method status="PASS" signature="createJsonArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApi2@5700d6b1]" name="createJsonArrayRequestBody" duration-ms="8" started-at="2018-11-07T08:44:30Z" finished-at="2018-11-07T08:44:30Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createJsonArrayRequestBody -->
-        <test-method status="PASS" signature="patchJsonTest()[pri:0, instance:dummy.restapi.test.EmployeeApiTests2@72d818d1]" name="patchJsonTest" duration-ms="9" started-at="2018-11-03T03:45:31Z" finished-at="2018-11-03T03:45:31Z">
+        <test-method status="PASS" signature="patchJsonTest()[pri:0, instance:dummy.restapi.test.EmployeeApi2@5700d6b1]" name="patchJsonTest" duration-ms="4" started-at="2018-11-07T08:44:30Z" finished-at="2018-11-07T08:44:30Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- patchJsonTest -->
-        <test-method status="PASS" signature="Closure()[pri:0, instance:dummy.restapi.test.EmployeeApiTests2@72d818d1]" name="Closure" is-config="true" duration-ms="0" started-at="2018-11-03T03:45:31Z" finished-at="2018-11-03T03:45:31Z">
+        <test-method status="PASS" signature="Closure()[pri:0, instance:dummy.restapi.test.EmployeeApi2@5700d6b1]" name="Closure" is-config="true" duration-ms="0" started-at="2018-11-07T08:44:30Z" finished-at="2018-11-07T08:44:30Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Closure -->
-      </class> <!-- dummy.restapi.test.EmployeeApiTests2 -->
-      <class name="dummy.restapi.test.EmployeeApiTests">
-        <test-method status="PASS" signature="StartSuite(org.testng.ITestContext)[pri:0, instance:dummy.restapi.test.EmployeeApiTests@27c20538]" name="StartSuite" is-config="true" duration-ms="18" started-at="2018-11-03T03:45:22Z" finished-at="2018-11-03T03:45:22Z">
+      </class> <!-- dummy.restapi.test.EmployeeApi2 -->
+      <class name="dummy.restapi.test.EmployeeApi">
+        <test-method status="PASS" signature="StartSuite(org.testng.ITestContext)[pri:0, instance:dummy.restapi.test.EmployeeApi@1ce92674]" name="StartSuite" is-config="true" duration-ms="18" started-at="2018-11-07T08:44:20Z" finished-at="2018-11-07T08:44:20Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[org.testng.TestRunner@62515a47]]>
+                <![CDATA[org.testng.TestRunner@3c5a54b7]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- StartSuite -->
-        <test-method status="PASS" signature="InitialSetup()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@27c20538]" name="InitialSetup" is-config="true" duration-ms="53" started-at="2018-11-03T03:45:22Z" finished-at="2018-11-03T03:45:23Z">
+        <test-method status="PASS" signature="InitialSetup()[pri:0, instance:dummy.restapi.test.EmployeeApi@1ce92674]" name="InitialSetup" is-config="true" duration-ms="66" started-at="2018-11-07T08:44:20Z" finished-at="2018-11-07T08:44:20Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- InitialSetup -->
-        <test-method status="PASS" signature="createEmployees()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@27c20538]" name="createEmployees" duration-ms="4220" started-at="2018-11-03T03:45:23Z" finished-at="2018-11-03T03:45:27Z">
+        <test-method status="PASS" signature="createEmployees()[pri:0, instance:dummy.restapi.test.EmployeeApi@1ce92674]" name="createEmployees" duration-ms="4174" started-at="2018-11-07T08:44:20Z" finished-at="2018-11-07T08:44:25Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createEmployees -->
-        <test-method status="FAIL" signature="createArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@27c20538]" name="createArrayRequestBody" duration-ms="851" started-at="2018-11-03T03:45:27Z" finished-at="2018-11-03T03:45:28Z">
-          <exception class="java.lang.AssertionError">
+        <test-method status="FAIL" signature="createArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApi@1ce92674]" name="createArrayRequestBody" duration-ms="840" started-at="2018-11-07T08:44:25Z" finished-at="2018-11-07T08:44:25Z">
+          <exception class="com.jayway.jsonpath.PathNotFoundException">
             <message>
-              <![CDATA[The following asserts failed:
-expected [true] but found [false]]]>
+              <![CDATA[Expected to find an object with property ['id'] in path $ but found 'java.lang.Boolean'. This is not a json object according to the JsonProvider: 'com.jayway.jsonpath.spi.json.JsonSmartJsonProvider'.]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: The following asserts failed:
-expected [true] but found [false]
-at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:43)
-at dummy.restapi.test.EmployeeApiTests.createArrayRequestBody(EmployeeApiTests.java:123)
+              <![CDATA[com.jayway.jsonpath.PathNotFoundException: Expected to find an object with property ['id'] in path $ but found 'java.lang.Boolean'. This is not a json object according to the JsonProvider: 'com.jayway.jsonpath.spi.json.JsonSmartJsonProvider'.
+at com.jayway.jsonpath.internal.path.PropertyPathToken.evaluate(PropertyPathToken.java:69)
+at com.jayway.jsonpath.internal.path.RootPathToken.evaluate(RootPathToken.java:62)
+at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:53)
+at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:61)
+at com.jayway.jsonpath.JsonPath.read(JsonPath.java:187)
+at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:164)
+at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:147)
+at com.jayway.jsonpath.JsonPath.read(JsonPath.java:502)
+at dummy.restapi.test.EmployeeApi.createArrayRequestBody(EmployeeApi.java:113)
 at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -128,34 +138,34 @@ at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
+          </exception> <!-- com.jayway.jsonpath.PathNotFoundException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createArrayRequestBody -->
-        <test-method status="PASS" signature="createJsonArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@27c20538]" name="createJsonArrayRequestBody" duration-ms="22" started-at="2018-11-03T03:45:28Z" finished-at="2018-11-03T03:45:28Z">
+        <test-method status="PASS" signature="createJsonArrayRequestBody()[pri:0, instance:dummy.restapi.test.EmployeeApi@1ce92674]" name="createJsonArrayRequestBody" duration-ms="6" started-at="2018-11-07T08:44:25Z" finished-at="2018-11-07T08:44:25Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createJsonArrayRequestBody -->
-        <test-method status="PASS" signature="patchJsonTest()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@27c20538]" name="patchJsonTest" duration-ms="216" started-at="2018-11-03T03:45:28Z" finished-at="2018-11-03T03:45:28Z">
+        <test-method status="PASS" signature="patchJsonTest()[pri:0, instance:dummy.restapi.test.EmployeeApi@1ce92674]" name="patchJsonTest" duration-ms="194" started-at="2018-11-07T08:44:25Z" finished-at="2018-11-07T08:44:26Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- patchJsonTest -->
-        <test-method status="PASS" signature="Closure()[pri:0, instance:dummy.restapi.test.EmployeeApiTests@27c20538]" name="Closure" is-config="true" duration-ms="1" started-at="2018-11-03T03:45:28Z" finished-at="2018-11-03T03:45:28Z">
+        <test-method status="PASS" signature="Closure()[pri:0, instance:dummy.restapi.test.EmployeeApi@1ce92674]" name="Closure" is-config="true" duration-ms="2" started-at="2018-11-07T08:44:26Z" finished-at="2018-11-07T08:44:26Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Closure -->
-        <test-method status="PASS" signature="EndSuite(org.testng.ITestContext)[pri:0, instance:dummy.restapi.test.EmployeeApiTests@27c20538]" name="EndSuite" is-config="true" duration-ms="9" started-at="2018-11-03T03:45:31Z" finished-at="2018-11-03T03:45:31Z">
+        <test-method status="PASS" signature="EndSuite(org.testng.ITestContext)[pri:0, instance:dummy.restapi.test.EmployeeApi@1ce92674]" name="EndSuite" is-config="true" duration-ms="14" started-at="2018-11-07T08:44:30Z" finished-at="2018-11-07T08:44:30Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[org.testng.TestRunner@62515a47]]>
+                <![CDATA[org.testng.TestRunner@3c5a54b7]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- EndSuite -->
-      </class> <!-- dummy.restapi.test.EmployeeApiTests -->
+      </class> <!-- dummy.restapi.test.EmployeeApi -->
     </test> <!-- ApiTests -->
   </suite> <!-- DummyApiTestSuites -->
 </testng-results>

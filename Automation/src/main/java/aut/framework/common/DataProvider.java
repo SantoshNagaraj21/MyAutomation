@@ -31,11 +31,11 @@ public class DataProvider {
 	public static HashMap[][] testData(String sheetName) throws Exception {
 
 		String filepath = ReadProperties.getPropertyValue("TestDataPath",
-				"\\src\\main\\resources\\common\\Config.Properties");
+				"/src/main/resources/common/Config.Properties");
 		String fileName = ReadProperties.getPropertyValue("TestDataFile",
-				"\\src\\main\\resources\\common\\Config.Properties");
+				"/src/main/resources/common/Config.Properties");
 
-		File file = new File("./" + filepath + "\\" + fileName);
+		File file = new File(System.getProperty("user.dir") + filepath + "/" + fileName);
 
 		FileInputStream testdatafile = new FileInputStream(file);
 
@@ -97,9 +97,9 @@ public class DataProvider {
 			throws IOException, ParserConfigurationException, SAXException {
 
 		String filepath = ReadProperties.getPropertyValue("TestDataPath",
-				"\\src\\main\\resources\\common\\Config.Properties");
+				"/src/main/resources/common/Config.Properties");
 
-		File file = new File("./" + filepath + "\\" + xmlName + ".xml");
+		File file = new File(System.getProperty("user.dir") + filepath + "/" + xmlName + ".xml");
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;

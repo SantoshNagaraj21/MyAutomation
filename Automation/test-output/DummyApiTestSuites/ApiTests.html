@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>6/2/0</td>
 </tr><tr>
-<td>Started on:</td><td>Sat Nov 03 09:15:22 IST 2018</td>
+<td>Started on:</td><td>Wed Nov 07 14:14:20 IST 2018</td>
 </tr>
-<tr><td>Total time:</td><td>8 seconds (8753 ms)</td>
+<tr><td>Total time:</td><td>9 seconds (9336 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -75,15 +75,28 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='dummy.restapi.test.EmployeeApiTests.createArrayRequestBody()'><b>createArrayRequestBody</b><br>Test class: dummy.restapi.test.EmployeeApiTests</td>
-<td><div><pre>java.lang.AssertionError: The following asserts failed:
-	expected [true] but found [false]
-	at dummy.restapi.test.EmployeeApiTests.createArrayRequestBody(EmployeeApiTests.java:123)
-... Removed 26 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace539240764", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace539240764'><pre>java.lang.AssertionError: The following asserts failed:
-	expected [true] but found [false]
-	at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:43)
-	at dummy.restapi.test.EmployeeApiTests.createArrayRequestBody(EmployeeApiTests.java:123)
+<td title='dummy.restapi.test.EmployeeApi.createArrayRequestBody()'><b>createArrayRequestBody</b><br>Test class: dummy.restapi.test.EmployeeApi</td>
+<td><div><pre>com.jayway.jsonpath.PathNotFoundException: Expected to find an object with property [&apos;id&apos;] in path $ but found &apos;java.lang.Boolean&apos;. This is not a json object according to the JsonProvider: &apos;com.jayway.jsonpath.spi.json.JsonSmartJsonProvider&apos;.
+	at com.jayway.jsonpath.internal.path.PropertyPathToken.evaluate(PropertyPathToken.java:69)
+	at com.jayway.jsonpath.internal.path.RootPathToken.evaluate(RootPathToken.java:62)
+	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:53)
+	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:61)
+	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:187)
+	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:164)
+	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:147)
+	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:502)
+	at dummy.restapi.test.EmployeeApi.createArrayRequestBody(EmployeeApi.java:113)
+... Removed 25 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1774468680", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1774468680'><pre>com.jayway.jsonpath.PathNotFoundException: Expected to find an object with property [&apos;id&apos;] in path $ but found &apos;java.lang.Boolean&apos;. This is not a json object according to the JsonProvider: &apos;com.jayway.jsonpath.spi.json.JsonSmartJsonProvider&apos;.
+	at com.jayway.jsonpath.internal.path.PropertyPathToken.evaluate(PropertyPathToken.java:69)
+	at com.jayway.jsonpath.internal.path.RootPathToken.evaluate(RootPathToken.java:62)
+	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:53)
+	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:61)
+	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:187)
+	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:164)
+	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:147)
+	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:502)
+	at dummy.restapi.test.EmployeeApi.createArrayRequestBody(EmployeeApi.java:113)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -111,17 +124,30 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 </pre></div></td>
 <td>0</td>
-<td>dummy.restapi.test.EmployeeApiTests@27c20538</td></tr>
+<td>dummy.restapi.test.EmployeeApi@1ce92674</td></tr>
 <tr>
-<td title='dummy.restapi.test.EmployeeApiTests2.createArrayRequestBody()'><b>createArrayRequestBody</b><br>Test class: dummy.restapi.test.EmployeeApiTests2</td>
-<td><div><pre>java.lang.AssertionError: The following asserts failed:
-	expected [true] but found [false]
-	at dummy.restapi.test.EmployeeApiTests2.createArrayRequestBody(EmployeeApiTests2.java:123)
-... Removed 26 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace358420513", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace358420513'><pre>java.lang.AssertionError: The following asserts failed:
-	expected [true] but found [false]
-	at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:43)
-	at dummy.restapi.test.EmployeeApiTests2.createArrayRequestBody(EmployeeApiTests2.java:123)
+<td title='dummy.restapi.test.EmployeeApi2.createArrayRequestBody()'><b>createArrayRequestBody</b><br>Test class: dummy.restapi.test.EmployeeApi2</td>
+<td><div><pre>com.jayway.jsonpath.PathNotFoundException: Expected to find an object with property [&apos;id&apos;] in path $ but found &apos;java.lang.Boolean&apos;. This is not a json object according to the JsonProvider: &apos;com.jayway.jsonpath.spi.json.JsonSmartJsonProvider&apos;.
+	at com.jayway.jsonpath.internal.path.PropertyPathToken.evaluate(PropertyPathToken.java:69)
+	at com.jayway.jsonpath.internal.path.RootPathToken.evaluate(RootPathToken.java:62)
+	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:53)
+	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:61)
+	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:187)
+	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:164)
+	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:147)
+	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:502)
+	at dummy.restapi.test.EmployeeApi2.createArrayRequestBody(EmployeeApi2.java:113)
+... Removed 25 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1492822331", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1492822331'><pre>com.jayway.jsonpath.PathNotFoundException: Expected to find an object with property [&apos;id&apos;] in path $ but found &apos;java.lang.Boolean&apos;. This is not a json object according to the JsonProvider: &apos;com.jayway.jsonpath.spi.json.JsonSmartJsonProvider&apos;.
+	at com.jayway.jsonpath.internal.path.PropertyPathToken.evaluate(PropertyPathToken.java:69)
+	at com.jayway.jsonpath.internal.path.RootPathToken.evaluate(RootPathToken.java:62)
+	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:53)
+	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:61)
+	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:187)
+	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:164)
+	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:147)
+	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:502)
+	at dummy.restapi.test.EmployeeApi2.createArrayRequestBody(EmployeeApi2.java:113)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -148,8 +174,8 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 </pre></div></td>
-<td>0</td>
-<td>dummy.restapi.test.EmployeeApiTests2@72d818d1</td></tr>
+<td>1</td>
+<td>dummy.restapi.test.EmployeeApi2@5700d6b1</td></tr>
 </table><p>
 <table width='100%' border='1' class='invocation-passed'>
 <tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
@@ -159,35 +185,35 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='dummy.restapi.test.EmployeeApiTests.createEmployees()'><b>createEmployees</b><br>Test class: dummy.restapi.test.EmployeeApiTests</td>
+<td title='dummy.restapi.test.EmployeeApi.createEmployees()'><b>createEmployees</b><br>Test class: dummy.restapi.test.EmployeeApi</td>
 <td></td>
 <td>4</td>
-<td>dummy.restapi.test.EmployeeApiTests@27c20538</td></tr>
+<td>dummy.restapi.test.EmployeeApi@1ce92674</td></tr>
 <tr>
-<td title='dummy.restapi.test.EmployeeApiTests2.createEmployees()'><b>createEmployees</b><br>Test class: dummy.restapi.test.EmployeeApiTests2</td>
+<td title='dummy.restapi.test.EmployeeApi2.createEmployees()'><b>createEmployees</b><br>Test class: dummy.restapi.test.EmployeeApi2</td>
 <td></td>
 <td>2</td>
-<td>dummy.restapi.test.EmployeeApiTests2@72d818d1</td></tr>
+<td>dummy.restapi.test.EmployeeApi2@5700d6b1</td></tr>
 <tr>
-<td title='dummy.restapi.test.EmployeeApiTests.createJsonArrayRequestBody()'><b>createJsonArrayRequestBody</b><br>Test class: dummy.restapi.test.EmployeeApiTests</td>
+<td title='dummy.restapi.test.EmployeeApi.createJsonArrayRequestBody()'><b>createJsonArrayRequestBody</b><br>Test class: dummy.restapi.test.EmployeeApi</td>
 <td></td>
 <td>0</td>
-<td>dummy.restapi.test.EmployeeApiTests@27c20538</td></tr>
+<td>dummy.restapi.test.EmployeeApi@1ce92674</td></tr>
 <tr>
-<td title='dummy.restapi.test.EmployeeApiTests2.createJsonArrayRequestBody()'><b>createJsonArrayRequestBody</b><br>Test class: dummy.restapi.test.EmployeeApiTests2</td>
+<td title='dummy.restapi.test.EmployeeApi2.createJsonArrayRequestBody()'><b>createJsonArrayRequestBody</b><br>Test class: dummy.restapi.test.EmployeeApi2</td>
 <td></td>
 <td>0</td>
-<td>dummy.restapi.test.EmployeeApiTests2@72d818d1</td></tr>
+<td>dummy.restapi.test.EmployeeApi2@5700d6b1</td></tr>
 <tr>
-<td title='dummy.restapi.test.EmployeeApiTests.patchJsonTest()'><b>patchJsonTest</b><br>Test class: dummy.restapi.test.EmployeeApiTests</td>
+<td title='dummy.restapi.test.EmployeeApi.patchJsonTest()'><b>patchJsonTest</b><br>Test class: dummy.restapi.test.EmployeeApi</td>
 <td></td>
 <td>0</td>
-<td>dummy.restapi.test.EmployeeApiTests@27c20538</td></tr>
+<td>dummy.restapi.test.EmployeeApi@1ce92674</td></tr>
 <tr>
-<td title='dummy.restapi.test.EmployeeApiTests2.patchJsonTest()'><b>patchJsonTest</b><br>Test class: dummy.restapi.test.EmployeeApiTests2</td>
+<td title='dummy.restapi.test.EmployeeApi2.patchJsonTest()'><b>patchJsonTest</b><br>Test class: dummy.restapi.test.EmployeeApi2</td>
 <td></td>
 <td>0</td>
-<td>dummy.restapi.test.EmployeeApiTests2@72d818d1</td></tr>
+<td>dummy.restapi.test.EmployeeApi2@5700d6b1</td></tr>
 </table><p>
 </body>
 </html>

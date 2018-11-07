@@ -30,7 +30,7 @@ public class BaseAPITest extends CommonUtils {
 		System.out.println("Running Tests for: " + ClassName);
 		System.out.println("---------------------------------------------------------");
 
-		PropertyConfigurator.configure("./" + "\\src\\main\\resources\\common\\log4j.properties");
+		PropertyConfigurator.configure(System.getProperty("user.dir") + "/src/main/resources/common/log4j.properties");
 	}
 
 	@AfterClass
@@ -53,7 +53,7 @@ public class BaseAPITest extends CommonUtils {
 //		String ClassName = this.getClass().getSimpleName();
 
 		try {
-			out = new PrintStream(new FileOutputStream("./" + "\\test-results\\" + suiteName + ".xml", false), true);
+			out = new PrintStream(new FileOutputStream(System.getProperty("user.dir") + "/test-results/" + suiteName + ".xml", false), true);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -72,7 +72,7 @@ public class BaseAPITest extends CommonUtils {
 
 //		System.out.println("Suite Name: " + suiteName);
 
-		System.out.println(new String(Files.readAllBytes(Paths.get("./" + "\\test-results\\" + suiteName + ".xml"))));
+		System.out.println(new String(Files.readAllBytes(Paths.get(System.getProperty("user.dir") + "/test-results/" + suiteName + ".xml"))));
 
 	}
 

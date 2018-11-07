@@ -6,16 +6,7 @@
   </listeners>
   <test thread-count="5" name="ApiTests(failed)">
     <classes>
-      <class name="dummy.restapi.test.EmployeeApiTests2">
-        <methods>
-          <include name="createArrayRequestBody"/>
-          <include name="EndSuite"/>
-          <include name="StartSuite"/>
-          <include name="InitialSetup"/>
-          <include name="Closure"/>
-        </methods>
-      </class> <!-- dummy.restapi.test.EmployeeApiTests2 -->
-      <class name="dummy.restapi.test.EmployeeApiTests">
+      <class name="dummy.restapi.test.EmployeeApi">
         <methods>
           <include name="EndSuite"/>
           <include name="StartSuite"/>
@@ -23,7 +14,16 @@
           <include name="Closure"/>
           <include name="createArrayRequestBody"/>
         </methods>
-      </class> <!-- dummy.restapi.test.EmployeeApiTests -->
+      </class> <!-- dummy.restapi.test.EmployeeApi -->
+      <class name="dummy.restapi.test.EmployeeApi2">
+        <methods>
+          <include name="EndSuite"/>
+          <include name="StartSuite"/>
+          <include name="InitialSetup"/>
+          <include name="Closure"/>
+          <include name="createArrayRequestBody"/>
+        </methods>
+      </class> <!-- dummy.restapi.test.EmployeeApi2 -->
     </classes>
   </test> <!-- ApiTests(failed) -->
 </suite> <!-- Failed suite [DummyApiTestSuites] -->

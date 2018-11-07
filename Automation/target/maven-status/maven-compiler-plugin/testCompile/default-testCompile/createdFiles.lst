@@ -1,0 +1,9 @@
+demo\api\test\dataProvDemo.class
+aut\ui\google\objrepo\GoogleSearchPage.class
+aut\ui\google\test\GmailLogin.class
+dummy\restapi\test\EmployeeApi2.class
+dummy\restapi\test\EmployeeApi.class
+dummy\restapi\test\Curl.class
+aut\ui\google\objrepo\GmailLoginPage.class
+dummy\restapi\test\CurlLog.class
+aut\ui\google\test\GoogleTextSearch.class

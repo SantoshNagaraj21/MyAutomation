@@ -13,8 +13,8 @@ public class BaseUITest extends CommonUtils {
 	@BeforeClass
 	public void InitialSetup() throws IOException {
 		
-		PropertyConfigurator.configure("./" + "\\src\\main\\resources\\common\\log4j.properties");
-		String urlTitle = ReadProperties.getPropertyValue("URLTitle", "\\src\\main\\resources\\common\\Config.Properties");
+		PropertyConfigurator.configure(System.getProperty("user.dir") + "/src/main/resources/common/log4j.properties");
+		String urlTitle = ReadProperties.getPropertyValue("URLTitle", "/src/main/resources/common/Config.Properties");
 		
 		CommonUtils.InitiateDriver();
 		CommonUtils.LoadAndValidateURL(urlTitle);
