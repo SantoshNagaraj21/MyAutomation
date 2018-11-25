@@ -8,38 +8,11 @@
 <body>
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
-<tr><th colspan="7">DummyApiTestSuites</th></tr>
-<tr><td><a href="#t0">ApiTests</a></td><td class="num">6</td><td class="num">0</td><td class="num attn">2</td><td class="num">9,336</td><td></td><td></td></tr>
+<tr><th colspan="7">Default suite</th></tr>
+<tr><td><a href="#t0">Default test</a></td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">18,928</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">DummyApiTestSuites</th></tr></tbody><tbody id="t0"><tr><th colspan="4">ApiTests &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">dummy.restapi.test.EmployeeApi</td><td><a href="#m0">createArrayRequestBody</a></td><td rowspan="1">1541580265095</td><td rowspan="1">840</td></tr><tr class="failedodd"><td rowspan="1">dummy.restapi.test.EmployeeApi2</td><td><a href="#m1">createArrayRequestBody</a></td><td rowspan="1">1541580268473</td><td rowspan="1">1586</td></tr><tr><th colspan="4">ApiTests &#8212; passed</th></tr><tr class="passedeven"><td rowspan="3">dummy.restapi.test.EmployeeApi</td><td><a href="#m2">createEmployees</a></td><td rowspan="1">1541580260917</td><td rowspan="1">4174</td></tr><tr class="passedeven"><td><a href="#m3">createJsonArrayRequestBody</a></td><td rowspan="1">1541580265970</td><td rowspan="1">6</td></tr><tr class="passedeven"><td><a href="#m4">patchJsonTest</a></td><td rowspan="1">1541580265978</td><td rowspan="1">194</td></tr><tr class="passedodd"><td rowspan="3">dummy.restapi.test.EmployeeApi2</td><td><a href="#m5">createEmployees</a></td><td rowspan="1">1541580266179</td><td rowspan="1">2289</td></tr><tr class="passedodd"><td><a href="#m6">createJsonArrayRequestBody</a></td><td rowspan="1">1541580270064</td><td rowspan="1">8</td></tr><tr class="passedodd"><td><a href="#m7">patchJsonTest</a></td><td rowspan="1">1541580270114</td><td rowspan="1">4</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">aut.irctc.testscenarios.login.IrctcLogin</td><td><a href="#m0">test</a></td><td rowspan="1">1543125721466</td><td rowspan="1">7002</td></tr></tbody>
 </table>
-<h2>ApiTests</h2><h3 id="m0">dummy.restapi.test.EmployeeApi#createArrayRequestBody</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">com.jayway.jsonpath.PathNotFoundException: Expected to find an object with property [&apos;id&apos;] in path $ but found &apos;java.lang.Boolean&apos;. This is not a json object according to the JsonProvider: &apos;com.jayway.jsonpath.spi.json.JsonSmartJsonProvider&apos;.
-	at com.jayway.jsonpath.internal.path.PropertyPathToken.evaluate(PropertyPathToken.java:69)
-	at com.jayway.jsonpath.internal.path.RootPathToken.evaluate(RootPathToken.java:62)
-	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:53)
-	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:61)
-	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:187)
-	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:164)
-	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:147)
-	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:502)
-	at dummy.restapi.test.EmployeeApi.createArrayRequestBody(EmployeeApi.java:113)
-... Removed 25 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m1">dummy.restapi.test.EmployeeApi2#createArrayRequestBody</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">com.jayway.jsonpath.PathNotFoundException: Expected to find an object with property [&apos;id&apos;] in path $ but found &apos;java.lang.Boolean&apos;. This is not a json object according to the JsonProvider: &apos;com.jayway.jsonpath.spi.json.JsonSmartJsonProvider&apos;.
-	at com.jayway.jsonpath.internal.path.PropertyPathToken.evaluate(PropertyPathToken.java:69)
-	at com.jayway.jsonpath.internal.path.RootPathToken.evaluate(RootPathToken.java:62)
-	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:53)
-	at com.jayway.jsonpath.internal.path.CompiledPath.evaluate(CompiledPath.java:61)
-	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:187)
-	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:164)
-	at com.jayway.jsonpath.internal.JsonContext.read(JsonContext.java:147)
-	at com.jayway.jsonpath.JsonPath.read(JsonPath.java:502)
-	at dummy.restapi.test.EmployeeApi2.createArrayRequestBody(EmployeeApi2.java:113)
-... Removed 25 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m2">dummy.restapi.test.EmployeeApi#createEmployees</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m3">dummy.restapi.test.EmployeeApi#createJsonArrayRequestBody</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m4">dummy.restapi.test.EmployeeApi#patchJsonTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m5">dummy.restapi.test.EmployeeApi2#createEmployees</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m6">dummy.restapi.test.EmployeeApi2#createJsonArrayRequestBody</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m7">dummy.restapi.test.EmployeeApi2#patchJsonTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>Default test</h2><h3 id="m0">aut.irctc.testscenarios.login.IrctcLogin#test</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package aut.ui.google.test;
+package aut.google.testscenarios.login;
 
 import java.io.IOException;
 
@@ -7,7 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import aut.framework.common.BaseUITest;
-import aut.ui.google.objrepo.GoogleSearchPage;
+import aut.google.objrepo.common.GoogleSearchPage;
 
 public class GoogleTextSearch extends BaseUITest {
 

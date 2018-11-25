@@ -1,13 +1,14 @@
-package aut.ui.google.objrepo;
+package aut.google.objrepo.common;
 
 import java.io.IOException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import aut.framework.common.BaseUITest;
 import aut.framework.common.CommonUtils;
 
-public class GoogleSearchPage extends CommonUtils {
+public class GoogleSearchPage extends BaseUITest {
 
 	static By googletextbox = By.id("lst-ib");
 	static By googlesrchbutton = By.xpath("//input[@value='Google Search']");

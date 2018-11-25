@@ -14,7 +14,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
-public class BaseAPITest extends CommonUtils {
+public class BaseAPITest {
 
 	static PrintStream out = null;
 	static PrintStream stdout = System.out;
@@ -23,9 +23,9 @@ public class BaseAPITest extends CommonUtils {
 
 	@BeforeClass
 	public void InitialSetup() throws IOException {
-		
+
 		String ClassName = this.getClass().getSimpleName();
-		
+
 		System.out.println("---------------------------------------------------------");
 		System.out.println("Running Tests for: " + ClassName);
 		System.out.println("---------------------------------------------------------");
@@ -35,13 +35,12 @@ public class BaseAPITest extends CommonUtils {
 
 	@AfterClass
 	public void Closure() throws IOException {
-		
+
 		String ClassName = this.getClass().getSimpleName();
-		
+
 		System.out.println("---------------------------------------------------------");
 		System.out.println("Finished running Tests for: " + ClassName);
 		System.out.println("---------------------------------------------------------");
-
 
 	}
 
@@ -53,7 +52,9 @@ public class BaseAPITest extends CommonUtils {
 //		String ClassName = this.getClass().getSimpleName();
 
 		try {
-			out = new PrintStream(new FileOutputStream(System.getProperty("user.dir") + "/test-results/" + suiteName + ".xml", false), true);
+			out = new PrintStream(
+					new FileOutputStream(System.getProperty("user.dir") + "/test-results/" + suiteName + ".xml", false),
+					true);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -72,7 +73,8 @@ public class BaseAPITest extends CommonUtils {
 
 //		System.out.println("Suite Name: " + suiteName);
 
-		System.out.println(new String(Files.readAllBytes(Paths.get(System.getProperty("user.dir") + "/test-results/" + suiteName + ".xml"))));
+		System.out.println(new String(
+				Files.readAllBytes(Paths.get(System.getProperty("user.dir") + "/test-results/" + suiteName + ".xml"))));
 
 	}
 

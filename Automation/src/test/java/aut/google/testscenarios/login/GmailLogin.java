@@ -1,4 +1,4 @@
-package aut.ui.google.test;
+package aut.google.testscenarios.login;
 
 import java.util.LinkedHashMap;
 
@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import aut.framework.common.BaseUITest;
 import aut.framework.common.DataProviderClass;
-import aut.ui.google.objrepo.GmailLoginPage;
+import aut.google.objrepo.common.GmailLoginPage;
 
 public class GmailLogin extends BaseUITest {
 

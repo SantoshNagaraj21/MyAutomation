@@ -1,8 +1,0 @@
-2018-11-07 14:14:26,181  INFO [main] createEmployees:40 - INFO: Creating Employee from input JSON File
-2018-11-07 14:14:26,908  INFO [main] createEmployees:60 - INFO: Creating Employee from Request Body function
-
-2018-11-07 14:14:27,656  INFO [main] createEmployees:79 - INFO: Get the first Created Employee Record
-
-2018-11-07 14:14:28,479  INFO [main] createArrayRequestBody:106 - INFO: Run RunRequest in a separate Method
-2018-11-07 14:14:30,116  INFO [main] createArrayRequestBody:150 - INFO: Patching a JSON File
-
