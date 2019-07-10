@@ -330,7 +330,7 @@ public class CommonAPIUtils {
 		for (int i = 0; i < length; i++) {
 
 			String attribute = (String) requestparams[i];
-			String[] parts = attribute.split(":");
+			String[] parts = attribute.split("=");
 			String attributename = parts[0];
 			String attributevalue = parts[1];
 
@@ -355,7 +355,7 @@ public class CommonAPIUtils {
 		for (int i = 0; i < length; i++) {
 
 			String attribute = (String) requestparams[i];
-			String[] parts = attribute.split(":");
+			String[] parts = attribute.split("=");
 			String attributename = parts[0];
 			String attributevalue = parts[1];
 
@@ -379,11 +379,25 @@ public class CommonAPIUtils {
 		for (int i = 0; i < length; i++) {
 
 			String attribute = (String) requestparams[i];
-			String[] parts = attribute.split(":");
+			String[] parts = attribute.split("=");
 			String attributename = parts[0];
 			String attributevalue = parts[1];
 
-			requestBody.put(attributename, attributevalue);
+			if (attributename.contains("Child:")) {
+
+				String[] cparts = attributename.split(":");
+				String cattributename = cparts[1];
+
+				JSONObject jsonObj = new JSONObject(attributevalue);
+
+				requestBody.put(cattributename, jsonObj);
+
+			}
+
+			else {
+
+				requestBody.put(attributename, attributevalue);
+			}
 
 		}
 

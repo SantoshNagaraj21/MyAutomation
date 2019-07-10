@@ -13,6 +13,13 @@ public class DataProviderClass extends aut.framework.common.DataProvider{
 		return data;
 	}
 	
+	@DataProvider(name = "SearchData")
+	public static Object[][] SearchData() throws Exception {
+
+		Object[][] data = testData("SearchData");
+		return data;
+	}
+	
 	@DataProvider(name = "APITest")
 	public static Object[][] APITests() throws Exception {
 
