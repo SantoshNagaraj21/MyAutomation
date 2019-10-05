@@ -58,12 +58,12 @@ public class dataProvDemo extends BaseAPITest {
     Logger logger = Logger.getLogger("APITest");
 
     logger.info("---------------------------------------------------");
-    logger.info("Running test for Scenario Data Provider through TestNg Parameters");
+    logger.info("Running test for Scenario Data Provider through T̥estNg Parameters");
     logger.info("---------------------------------------------------");
 
     System.out.println("Parameters from testNG Xml" + url + exturl);
 
   }
-̥
+
 
 }

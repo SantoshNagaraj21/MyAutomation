@@ -1,11 +1,24 @@
 ---------------------------------------------------------
-Running Tests for: SocialSearchTest
+Running Tests for: dataProvDemo
 ---------------------------------------------------------
+Root element :apiTest
+DataSet Length: 3
+---------------------------------------------------
+	Running test for Scenario api for XML
+	---------------------------------------------------
+	Input Values dinkar185dinkarkad
+---------------------------------------------------
+	Running test for Scenario api for XML
+	---------------------------------------------------
+	Input Values Vaneet295vinniGupta
+---------------------------------------------------
+	Running test for Scenario api for XML
+	---------------------------------------------------
+	Input Values jasvir390jazzsingn
 ---------------------------------------------------
 	Running test for Scenario APITest Through Excel DataProvider
 	---------------------------------------------------
 	Input Values SampleTestapiusertest006password1apiusertest6@gmail.com
-JSON Obj Array [{"name":"Santoshtest","nestedChild":{"name":"Santoshtest","salary":"123","age":"23","child1":{"name":"Sample","salary":"Test","age":"apiusertest006"}},"salary":"123","Ch2":{"name":"Sample","salary":"Test","age":"apiusertest006"},"Ch1":{"name":"Sample","salary":"Test","age":"apiusertest006"},"age":"23"}]
 ---------------------------------------------------------
-Finished running Tests for: SocialSearchTest
+Finished running Tests for: dataProvDemo
 ---------------------------------------------------------
