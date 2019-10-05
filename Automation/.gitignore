@@ -1,1 +1,8 @@
 # Default ignored files
+/workspace.xml
+/Automation.iml
+/.classpath
+/.project
+/.idea
+/.settings/
+/target/**
