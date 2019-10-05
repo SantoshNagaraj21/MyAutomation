@@ -5,3 +5,5 @@
 /.project
 /.idea
 /.settings/
+/target/**
+/test-results/**
