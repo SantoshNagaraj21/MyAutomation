@@ -1,21 +1,5 @@
 package aut.framework.common;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.Assert;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flipkart.zjsonpatch.JsonPatch;
@@ -28,437 +12,748 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.jayway.jsonpath.JsonPath;
-
 import io.restassured.RestAssured;
+import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 
 public class CommonAPIUtils {
 
-	public static final String filepath = "/src/test/resources/test-data";
+  public static final String filepath = "/src/test/resources/test-data";
+  public static String hostname;
+  public static String timeZone;
+  public static int hostport;
+  static Date date = null;
+  static long testCaseNo = 0;
+  static SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
 
-	static Date date = null;
+  static {
+    try {
+      hostname = ReadProperties.getPropertyValue("host", "/src/main/resources/common/Config.Properties");
+      timeZone = ReadProperties.getPropertyValue("timezone", "/src/main/resources/common/Config.Properties");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
-	static long testCaseNo = 0;
+  static {
+    try {
+      hostport = Integer.parseInt(ReadProperties.getPropertyValue("gatewayport", "/src/main/resources/common/Config.Properties"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
-	static SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
+  SetFusionDataMap Url;
 
-	public static Response runRequest(Object... params) {
+  public static Response runRequest(Object... params) {
 
 //		System.setProperty("logback.configurationFile", "./" + "/src/main/resources/common/logback.xml");
 
-		System.setProperty("log.name", "curl");
+    System.setProperty("log.name", "curl");
 
-		Logger log = LoggerFactory.getLogger(CommonAPIUtils.class);
+    Logger log = LoggerFactory.getLogger(CommonAPIUtils.class);
 
-		Options options = Options.builder().targetPlatform(Platform.UNIX)
-				.updateCurl(curl -> curl.removeHeader("Host").removeHeader("User-Agent").removeHeader("Connection")
-						.setCompressed(false).setInsecure(false).setVerbose(false))
-				.useLongForm().printMultiliner().build();
-		RestAssuredConfig config = CurlLoggingRestAssuredConfigFactory.createConfig(options);
+    Options options = Options.builder().targetPlatform(Platform.UNIX)
+        .updateCurl(curl -> curl.removeHeader("Host").removeHeader("User-Agent").removeHeader("Connection").setCompressed(false).setInsecure(false).setVerbose(false))
+        .useLongForm().printMultiliner().build();
+    RestAssuredConfig config = CurlLoggingRestAssuredConfigFactory.createConfig(options);
 
-		testCaseNo = testCaseNo + 1;
+    testCaseNo = testCaseNo + 1;
 
-		String RequestBody = null;
+    String RequestBody = null;
 
-		String RequestType = params[0].toString();
-		String RequestURL = params[1].toString();
+    String RequestType = params[0].toString();
+    String RequestURL = hostname + ":" + hostport + params[1].toString();
 
-		if (params[2] != null) {
-			RequestBody = params[2].toString();
-		}
-		Object expRespCode = params[3];
+    if (params[2] != null) {
+      RequestBody = params[2].toString();
+    }
+    Object expRespCode = params[3];
 
-		RestAssured.baseURI = RequestURL;
-		RequestSpecification request = RestAssured.given().config(config).redirects().follow(false);
+    RestAssured.baseURI = RequestURL;
+
+    EncoderConfig encoderconfig = new EncoderConfig();
+
+    RequestSpecification request = RestAssured.given().config(config.encoderConfig(encoderconfig.appendDefaultContentCharsetToContentTypeIfUndefined(false))).redirects()
+        .follow(false);
 //										.log().headers();
 //										.log().all(true);
 //										.log().method()
 //										.log().uri()
 //										.log().headers()
 //										.log().parameters();
-		Response response = null;
+    Response response = null;
 
-		// Objects from 5th are considered headers or contentTypes for request
+    // Objects from 5th are considered headers or contentTypes for request
 
-		int length = params.length;
+    int length = params.length;
 
-		if (length >= 5) {
+    if (length >= 5) {
 
-			for (int i = 4; i < length; i++) {
-				String reqspec = (String) params[i];
-				String[] parts = reqspec.split(":");
-				String type = parts[0];
-				String attributename = parts[1];
-				String attributevalue = parts[2];
+      for (int i = 4; i < length; i++) {
+        String reqspec = (String) params[i];
+        String[] parts = reqspec.split(":");
+        String type = parts[0];
+        String attributename = parts[1];
+        String attributevalue = parts[2];
 
-				if (type.equals("HEADER")) {
+        if (type.equals("HEADER")) {
 
-					request.given().headers(attributename, attributevalue);
+          request.given().headers(attributename, attributevalue);
 
-				} else if ((type.equals("CONTENT"))) {
+        } else if ((type.equals("CONTENT"))) {
 
-					request.given().headers(attributename, attributevalue);
+          request.given().headers(attributename, attributevalue);
 
-				} else if ((type.equals("AUTH"))) {
+        } else if ((type.equals("AUTH"))) {
 
-					request.given().auth().preemptive().basic(attributename, attributevalue);
+          request.given().auth().preemptive().basic(attributename, attributevalue);
 
-				} else if ((type.equals("URLENCODE"))) {
+        } else if ((type.equals("PARAM"))) {
 
-					boolean value;
-					if (attributename == "true")
-						value = true;
-					else
-						value = false;
+          request.given().queryParam(attributename, attributevalue);
 
-					request.given().urlEncodingEnabled(value);
+        } else if ((type.equals("URLENCODE"))) {
 
-				}
+          boolean value;
+          if (attributename == "true") {
+            value = true;
+          } else {
+            value = false;
+          }
 
-			}
+          request.given().urlEncodingEnabled(value);
 
-		}
+        }
 
-		date = new Date();
+      }
 
-		System.out.println("\n" + formatter.format(date) + "\n");
+    }
 
-		System.out.println("-------------------------------------------------------------------");
-		System.out.println(testCaseNo + ". " + RequestType + " " + RequestURL);
-		System.out.println("================================================================");
+    date = new Date();
 
-		if (RequestType == "GET") {
+    System.out.println("\n" + formatter.format(date) + "\n");
 
-			response = request.get();
+    System.out.println("-------------------------------------------------------------------");
+    System.out.println(testCaseNo + ". " + RequestType + " " + RequestURL);
+    System.out.println("================================================================");
 
-		} else if (RequestType == "POST") {
+    if (RequestType == "GET") {
 
-			request.body(RequestBody);
-			request.given().headers("Content-Type", "application/json");
-			response = request.post();
+      try {
+        response = request.get();
+      } catch (Exception e) {
+        System.out.println("Error!!! Request didn't run successfully!!! Please check!!");
+        System.out.println("exit code: 1\n");
+        System.out.println("-------------------------------------------------------------------");
+        return response;
+      }
 
-		} else if (RequestType == "PUT") {
 
-			request.body(RequestBody);
-			request.given().headers("Content-Type", "application/json");
-			response = request.put();
+    } else if (RequestType == "POST") {
 
-		} else if (RequestType == "PATCH") {
+      try {
 
-			request.body(RequestBody);
-			request.given().headers("Content-Type", "application/json");
-			response = request.patch();
-		}
+        if (RequestBody != null) {
+          request.body(RequestBody);
+        }
+//        request.given().headers("Content-Type", "application/json");
+        response = request.post();
+      } catch (Exception e) {
+        System.out.println("Error!!! Request didn't run successfully!!! Please check!!");
+        System.out.println("exit code: 1\n");
+        System.out.println("-------------------------------------------------------------------");
+        return response;
+      }
 
-		else {
 
-			System.out.println("Invalid Request Type");
-			Assert.assertEquals(RequestType, "Inv");
+    } else if (RequestType == "PUT") {
 
-		}
+      try {
+        request.body(RequestBody);
+        request.given().headers("Content-Type", "application/json");
+        response = request.put();
+      } catch (Exception e) {
+        System.out.println("Error!!! Request didn't run successfully!!! Please check!!");
+        System.out.println("exit code: 1\n");
+        System.out.println("-------------------------------------------------------------------");
+        return response;
+      }
 
-		System.out.println("\nExpected Status Code : " + expRespCode + "\n");
 
-		if (RequestBody != null) {
+    } else if (RequestType == "PATCH") {
 
-			String prettyRequestBody = toPrettyFormat(RequestBody);
+      try {
+        request.body(RequestBody);
+        request.given().headers("Content-Type", "application/json");
+        response = request.patch();
+      } catch (Exception e) {
+        System.out.println("Error!!! Request didn't run successfully!!! Please check!!");
+        System.out.println("exit code: 1\n");
+        System.out.println("-------------------------------------------------------------------");
+        return response;
+      }
 
-			System.out.println("RequestBody: \n" + prettyRequestBody + "\n");
 
-		} else {
+    } else if (RequestType == "DELETE") {
 
-			System.out.println("RequestBody: \n" + RequestBody + "\n");
+      try {
+        request.given().headers("Content-Type", "application/json");
+        response = request.delete();
+      } catch (Exception e) {
+        System.out.println("Error!!! Request didn't run successfully!!! Please check!!");
+        System.out.println("exit code: 1\n");
+        System.out.println("-------------------------------------------------------------------");
+        return response;
+      }
 
-		}
+
+    } else {
+
+      System.out.println("Invalid Request Type");
+      Assert.assertEquals(RequestType, "Inv");
+
+    }
+
+    System.out.println("\nExpected Status Code : " + expRespCode + "\n");
+
+    if (RequestBody != null && !RequestBody.isEmpty()) {
+
+      String prettyRequestBody = toPrettyFormat(RequestBody);
+
+      System.out.println("RequestBody: \n" + prettyRequestBody + "\n");
+
+    } else {
+
+      System.out.println("RequestBody: \n" + RequestBody + "\n");
+
+    }
 
 //		System.out.println("Expected Status Code : " + expRespCode + "\n");
 
-		String responseBody = response.getBody().asString();
-		int rstatuscode = response.getStatusCode();
+    String responseBody = response.getBody().asString();
+    int rstatuscode = response.getStatusCode();
 
-		System.out.println("Actual Status Code : " + rstatuscode + "\n");
+    System.out.println("Actual Status Code : " + rstatuscode + "\n");
 
-		if (responseBody != null) {
+    if (responseBody != null && !responseBody.isEmpty()) {
 
-			String prettyResponseBody = toPrettyFormat(responseBody);
+      if (RequestURL.contains("oauth/token")) {
+        System.out.println("ResponseBody: \n" + responseBody + "\n");
+      } else {
+        String prettyResponseBody = toPrettyFormat(responseBody);
 
-			System.out.println("ResponseBody: \n" + prettyResponseBody + "\n");
+        System.out.println("ResponseBody: \n" + prettyResponseBody + "\n");
+      }
 
-		} else {
+    } else {
 
-			System.out.println("ResponseBody: \n" + responseBody + "\n");
+      System.out.println("ResponseBody: \n" + responseBody + "\n");
 
-		}
+    }
 
-		return response;
+    return response;
 
-	}
+  }
 
-	public static boolean checkStatus(String requestType, String URL, int expStatusCode, int actStatusCode) {
+  public static boolean checkStatus(String requestType, String URL, int expStatusCode,
+      int actStatusCode) {
 
-		if (expStatusCode == actStatusCode) {
+    if (expStatusCode == actStatusCode) {
 
-//			System.out.println(requestType + " " + URL + " ");
-			System.out.println("INFO: Expected and Actual Status Code Matches\n");
-			System.out.println("exit code: 0\n");
-			System.out.println("-------------------------------------------------------------------");
-			return true;
+//			System.out.println(requestType + " " + hostname + ":" + hostport +  URL + " ");
+      System.out.println("INFO: Expected and Actual Status Code Matches\n");
+      System.out.println("exit code: 0\n");
+      System.out.println("-------------------------------------------------------------------");
+      return true;
 
-		} else {
+    } else {
 
-//			System.out.println(requestType + " " + URL + " ");
-			System.out.println("INFO: Expected and Actual Status Code Doesn't Match\n");
-			System.out.println("exit code: 1\n");
-			System.out.println("-------------------------------------------------------------------");
-			return false;
+//			System.out.println(requestType + " " + hostname + ":" + hostport +  URL + " ");
+      System.out.println("INFO: Expected and Actual Status Code Doesn't Match\n");
+      System.out.println("exit code: 1\n");
+      System.out.println("-------------------------------------------------------------------");
+      return false;
 
-		}
+    }
 
-	}
+  }
 
-	public static boolean checkValues(String requestType, String URL, String expattribute, String actualattribute) {
+  public static boolean checkValues(String requestType, String URL, Object expattribute,
+      Object actualattribute) {
 
-		testCaseNo = testCaseNo + 1;
+    testCaseNo = testCaseNo + 1;
 
-		date = new Date();
+    date = new Date();
 
-		System.out.println(formatter.format(date) + "\n");
+    System.out.println(formatter.format(date) + "\n");
 
-		if (expattribute.equals(actualattribute)) {
+    if (expattribute.equals(actualattribute)) {
 
-			System.out.println("-------------------------------------------------------------------");
-			System.out.println(testCaseNo + ". " + requestType + " " + URL);
-			System.out.println("================================================================");
-			System.out.println("\nExpected Value : " + expattribute);
-			System.out.println("Actual Value   : " + actualattribute + "\n");
-			System.out.println("INFO: Expected and Actual Value Matches\n");
-			System.out.println("exit code: 0\n");
-			System.out.println("-------------------------------------------------------------------");
-			return true;
+      System.out.println("-------------------------------------------------------------------");
+      System.out.println(testCaseNo + ". " + requestType + " " + hostname + ":" + hostport + URL);
+      System.out.println("================================================================");
+      System.out.println("\nExpected Value : " + expattribute);
+      System.out.println("Actual Value   : " + actualattribute + "\n");
+      System.out.println("INFO: Expected and Actual Value Matches\n");
+      System.out.println("exit code: 0\n");
+      System.out.println("-------------------------------------------------------------------");
+      return true;
 
-		} else {
+    } else {
 
-			System.out.println("-------------------------------------------------------------------");
-			System.out.println(testCaseNo + ". " + requestType + " " + URL);
-			System.out.println("================================================================");
-			System.out.println("\nExpected Value : " + expattribute);
-			System.out.println("Actual Value   : " + actualattribute + "\n");
-			System.out.println("INFO: Expected and Actual Value Doesn't Match\n");
-			System.out.println("exit code: 1\n");
-			System.out.println("-------------------------------------------------------------------");
-			return false;
+      System.out.println("-------------------------------------------------------------------");
+      System.out.println(testCaseNo + ". " + requestType + " " + hostname + ":" + hostport + URL);
+      System.out.println("================================================================");
+      System.out.println("\nExpected Value : " + expattribute);
+      System.out.println("Actual Value   : " + actualattribute + "\n");
+      System.out.println("INFO: Expected and Actual Value Doesn't Match\n");
+      System.out.println("exit code: 1\n");
+      System.out.println("-------------------------------------------------------------------");
+      return false;
 
-		}
+    }
 
-	}
+  }
 
-	public static boolean checkValuesNotEqual(String requestType, String URL, String expattribute,
-			String actualattribute) {
+  public static boolean checkValuesContains(String requestType, String URL, String expattribute,
+      String actualattribute) {
 
-		testCaseNo = testCaseNo + 1;
+    testCaseNo = testCaseNo + 1;
 
-		date = new Date();
+    date = new Date();
 
-		System.out.println(formatter.format(date) + "\n");
+    System.out.println(formatter.format(date) + "\n");
 
-		if (expattribute.equals(actualattribute)) {
+    if (actualattribute.toLowerCase().contains(expattribute.toLowerCase())) {
 
-			System.out.println(testCaseNo + ". " + requestType + " " + URL + " ");
-			System.out.println("================================================================");
-			System.out.println("\nExpected Value : " + expattribute);
-			System.out.println("Actual Value   : " + actualattribute + "\n");
-			System.out.println("INFO: Expected and Actual Value Matches\n");
-			System.out.println("exit code: 1\n");
-			System.out.println("-------------------------------------------------------------------");
-			return false;
+      System.out.println("-------------------------------------------------------------------");
+      System.out.println(testCaseNo + ". " + requestType + " " + hostname + ":" + hostport + URL);
+      System.out.println("================================================================");
+      System.out.println("\nExpected Value : " + expattribute);
+      System.out.println("Actual Value   : " + actualattribute + "\n");
+      System.out.println("INFO: Actual Value Contains Expected Value\n");
+      System.out.println("exit code: 0\n");
+      System.out.println("-------------------------------------------------------------------");
+      return true;
 
-		} else {
+    } else {
 
-			System.out.println(testCaseNo + ". " + requestType + " " + URL + " ");
-			System.out.println("================================================================");
-			System.out.println("\nExpected Value : " + expattribute);
-			System.out.println("Actual Value   : " + actualattribute + "\n");
-			System.out.println("INFO: Expected and Actual Value Doesn't Match\n");
-			System.out.println("exit code: 0\n");
-			System.out.println("-------------------------------------------------------------------");
-			return true;
+      System.out.println("-------------------------------------------------------------------");
+      System.out.println(testCaseNo + ". " + requestType + " " + hostname + ":" + hostport + URL);
+      System.out.println("================================================================");
+      System.out.println("\nExpected Value : " + expattribute);
+      System.out.println("Actual Value   : " + actualattribute + "\n");
+      System.out.println("INFO: Actual Value Doesn't Contains Expected Value\n");
+      System.out.println("exit code: 1\n");
+      System.out.println("-------------------------------------------------------------------");
+      return false;
 
-		}
+    }
 
-	}
+  }
 
-	public static String toPrettyFormat(String jsonString) {
+  public static boolean checkValuesContainsList(String requestType, String URL, String[] expattribute,
+      String actualattribute) {
 
-		Object obj = new JSONTokener(jsonString).nextValue();
-		String prettyJson = null;
+    List<String> expattributeList = Arrays.asList(expattribute);
 
-		if (obj instanceof JSONObject) {
+    testCaseNo = testCaseNo + 1;
 
-			JsonParser parser = new JsonParser();
-			JsonObject json = parser.parse(jsonString).getAsJsonObject();
+    date = new Date();
 
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			prettyJson = gson.toJson(json);
-			return prettyJson;
+    System.out.println(formatter.format(date) + "\n");
 
-		} else if (obj instanceof JSONArray) {
+    if (expattributeList.contains(actualattribute)) {
 
-			JsonParser parser = new JsonParser();
-			JsonArray json = parser.parse(jsonString).getAsJsonArray();
+      System.out.println("-------------------------------------------------------------------");
+      System.out.println(testCaseNo + ". " + requestType + " " + hostname + ":" + hostport + URL);
+      System.out.println("================================================================");
+      System.out.println("\nExpected Value : " + Arrays.toString(expattributeList.toArray()));
+      System.out.println("Actual Value   : " + actualattribute + "\n");
+      System.out.println("INFO: Actual Value exist in Expected List\n");
+      System.out.println("exit code: 0\n");
+      System.out.println("-------------------------------------------------------------------");
+      return true;
 
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			prettyJson = gson.toJson(json);
+    } else {
 
-			return prettyJson;
+      System.out.println("-------------------------------------------------------------------");
+      System.out.println(testCaseNo + ". " + requestType + " " + hostname + ":" + hostport + URL);
+      System.out.println("================================================================");
+      System.out.println("\nExpected Value : " + Arrays.toString(expattributeList.toArray()));
+      System.out.println("Actual Value   : " + actualattribute + "\n");
+      System.out.println("INFO: Actual Value Doesn't exist in Expected List\n");
+      System.out.println("exit code: 1\n");
+      System.out.println("-------------------------------------------------------------------");
+      return false;
 
-		} else {
+    }
 
-			return jsonString;
+  }
 
-		}
+  public static boolean checkValuesNotEqual(String requestType, String URL, String expattribute,
+      String actualattribute) {
 
-	}
+    testCaseNo = testCaseNo + 1;
 
-	public static String createRequestBody(Object... requestparams) {
+    date = new Date();
 
-		JSONObject requestBody = new JSONObject();
+    System.out.println(formatter.format(date) + "\n");
 
-		int length = requestparams.length;
+    if (expattribute.equals(actualattribute)) {
 
-		for (int i = 0; i < length; i++) {
+      System.out
+          .println(testCaseNo + ". " + requestType + " " + hostname + ":" + hostport + URL + " ");
+      System.out.println("================================================================");
+      System.out.println("\nExpected Value : " + expattribute);
+      System.out.println("Actual Value   : " + actualattribute + "\n");
+      System.out.println("INFO: Expected and Actual Value Matches\n");
+      System.out.println("exit code: 1\n");
+      System.out.println("-------------------------------------------------------------------");
+      return false;
 
-			String attribute = (String) requestparams[i];
-			String[] parts = attribute.split("=");
-			String attributename = parts[0];
-			String attributevalue = parts[1];
+    } else {
 
-			requestBody.put(attributename, attributevalue);
+      System.out
+          .println(testCaseNo + ". " + requestType + " " + hostname + ":" + hostport + URL + " ");
+      System.out.println("================================================================");
+      System.out.println("\nExpected Value : " + expattribute);
+      System.out.println("Actual Value   : " + actualattribute + "\n");
+      System.out.println("INFO: Expected and Actual Value Doesn't Match\n");
+      System.out.println("exit code: 0\n");
+      System.out.println("-------------------------------------------------------------------");
+      return true;
 
-		}
+    }
 
-		String reqBody = requestBody.toString();
+  }
 
-		return reqBody;
+  public static String toPrettyFormat(String jsonString) {
 
-	}
+    Object obj = new JSONTokener(jsonString).nextValue();
+    String prettyJson = null;
 
-	public static String createArrayRequestBody(Object... requestparams) {
+    if (obj instanceof JSONObject) {
 
-		JSONArray jsonArray = new JSONArray();
+      JsonParser parser = new JsonParser();
+      JsonObject json = parser.parse(jsonString).getAsJsonObject();
 
-		JSONObject requestBody = new JSONObject();
+      Gson gson = new GsonBuilder().setPrettyPrinting().create();
+      prettyJson = gson.toJson(json);
+      return prettyJson;
 
-		int length = requestparams.length;
+    } else if (obj instanceof JSONArray) {
 
-		for (int i = 0; i < length; i++) {
+      JsonParser parser = new JsonParser();
+      JsonArray json = parser.parse(jsonString).getAsJsonArray();
 
-			String attribute = (String) requestparams[i];
-			String[] parts = attribute.split("=");
-			String attributename = parts[0];
-			String attributevalue = parts[1];
+      Gson gson = new GsonBuilder().setPrettyPrinting().create();
+      prettyJson = gson.toJson(json);
 
-			requestBody.put(attributename, attributevalue);
+      return prettyJson;
 
-		}
+    } else {
 
-		jsonArray.put(requestBody);
+      return jsonString;
 
-		String jsonArrayString = jsonArray.toString();
+    }
 
-		return jsonArrayString;
-	}
+  }
 
-	public static String createJsonObject(Object... requestparams) {
+  public static String createRequestBody(Object... requestparams) {
 
-		JSONObject requestBody = new JSONObject();
+    JSONObject requestBody = new JSONObject();
 
-		int length = requestparams.length;
+    int length = requestparams.length;
 
-		for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; i++) {
 
-			String attribute = (String) requestparams[i];
-			String[] parts = attribute.split("=");
-			String attributename = parts[0];
-			String attributevalue = parts[1];
+      String attribute = (String) requestparams[i];
+      String[] parts = attribute.split("=", 2);
+      String attributename = parts[0];
+      String attributevalue = parts[1];
 
-			if (attributename.contains("Child:")) {
+      if (attributevalue.equals("null")) {
 
-				String[] cparts = attributename.split(":");
-				String cattributename = cparts[1];
+        requestBody.put(attributename.replace("_NUM", ""), requestBody.NULL);
 
-				JSONObject jsonObj = new JSONObject(attributevalue);
+      } else {
 
-				requestBody.put(cattributename, jsonObj);
+        if (attributevalue.equals("null")) {
 
-			}
+          requestBody.put(attributename.replace("_NUM", "").replace("_BOOL", ""), requestBody.NULL);
 
-			else {
+        } else {
 
-				requestBody.put(attributename, attributevalue);
-			}
+          if (attributename.contains("_NUM")) {
+            requestBody.put(attributename.replace("_NUM", ""), Integer.valueOf(attributevalue));
+          } else if (attributename.contains("_BOOL")) {
+            requestBody.put(attributename.replace("_BOOL", ""), Boolean.valueOf(attributevalue));
+          } else {
+            requestBody.put(attributename, attributevalue);
+          }
 
-		}
+        }
 
-		String requestBodyString = requestBody.toString();
+      }
 
-		return requestBodyString;
+    }
 
-	}
+    String reqBody = requestBody.toString();
 
-	public static String createJsonArrayRequestBody(String... requestparams) {
+    return reqBody;
 
-		JSONArray jsonArray = new JSONArray();
+  }
 
-		int length = requestparams.length;
+  public static String createArrayRequestBody(Object... requestparams) {
 
-		for (int i = 0; i < length; i++) {
+    JSONArray jsonArray = new JSONArray();
 
-			JSONObject jsonObj = new JSONObject(requestparams[i]);
+    JSONObject requestBody = new JSONObject();
 
-			jsonArray.put(jsonObj);
+    int length = requestparams.length;
 
-		}
+    for (int i = 0; i < length; i++) {
 
-		String jsonArrayString = jsonArray.toString();
+      String attribute = (String) requestparams[i];
+      String[] parts = attribute.split("=");
+      String attributename = parts[0];
+      String attributevalue = parts[1];
 
-		return jsonArrayString;
+      if (attributevalue.equals("null")) {
 
-	}
+        requestBody.put(attributename.replace("_NUM", ""), requestBody.NULL);
 
-	public static String getFile(String filepath, String filename)
-			throws FileNotFoundException, IOException, ParseException {
+      } else {
 
-		File file = new File(System.getProperty("user.dir") + filepath + "/" + filename);
+        if (attributevalue.equals("null")) {
 
-		JSONParser parser = new JSONParser();
-		String jsonString = parser.parse(new FileReader(file)).toString();
+          requestBody.put(attributename.replace("_NUM", "").replace("_BOOL", ""), requestBody.NULL);
 
-		return jsonString;
+        } else {
 
-	}
+          if (attributename.contains("_NUM")) {
+            requestBody.put(attributename.replace("_NUM", ""), Integer.valueOf(attributevalue));
+          } else if (attributename.contains("_BOOL")) {
+            requestBody.put(attributename.replace("_BOOL", ""), Boolean.valueOf(attributevalue));
+          } else {
+            requestBody.put(attributename, attributevalue);
+          }
 
-	public static String getValueFromJSON(String jsonString, String attribute) {
+        }
 
-		String temp = JsonPath.read(jsonString, "$" + attribute);
+      }
 
-		return temp;
+    }
 
-	}
+    jsonArray.put(requestBody);
 
-	public static String patchJson(String patchString, String SourceString) throws IOException {
+    String jsonArrayString = jsonArray.toString();
 
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode patchObj = mapper.readTree(patchString);
-		JsonNode sourceObj = mapper.readTree(SourceString);
+    return jsonArrayString;
+  }
 
-		JsonNode patchSource = JsonPatch.apply(patchObj, sourceObj);
+  public static String createJsonObject(Object... requestparams) {
 
-		String sourceString = patchSource.toString();
+    JSONObject requestBody = new JSONObject();
 
-		return sourceString;
+    int length = requestparams.length;
 
-	}
+    for (int i = 0; i < length; i++) {
+
+      String attribute = (String) requestparams[i];
+      String[] parts = attribute.split("=");
+      String attributename = parts[0];
+      String attributevalue = parts[1];
+
+      if (attributename.contains("Child:")) {
+
+        String[] cparts = attributename.split(":");
+        String cattributename = cparts[1];
+
+        JSONObject jsonObj = new JSONObject(attributevalue);
+
+        requestBody.put(cattributename, jsonObj);
+
+      } else {
+
+        if (attributevalue.equals("null")) {
+
+          requestBody.put(attributename.replace("_NUM", "").replace("_BOOL", ""), requestBody.NULL);
+
+        } else {
+
+          if (attributename.contains("_NUM")) {
+            requestBody.put(attributename.replace("_NUM", ""), Integer.valueOf(attributevalue));
+          } else if (attributename.contains("_BOOL")) {
+            requestBody.put(attributename.replace("_BOOL", ""), Boolean.valueOf(attributevalue));
+          } else {
+            requestBody.put(attributename, attributevalue);
+          }
+
+        }
+      }
+
+    }
+
+    String requestBodyString = requestBody.toString();
+
+    return requestBodyString;
+
+  }
+
+  public static String createJsonArrayRequestBody(String... requestparams) {
+
+    JSONArray jsonArray = new JSONArray();
+
+    int length = requestparams.length;
+
+    for (int i = 0; i < length; i++) {
+
+      JSONObject jsonObj = new JSONObject(requestparams[i]);
+
+      jsonArray.put(jsonObj);
+
+    }
+
+    String jsonArrayString = jsonArray.toString();
+
+    return jsonArrayString;
+
+  }
+
+  public static JsonObject addJsonArrayToJsonObject(String jsonObj, String jsonArray,
+      String arrayName) {
+
+    JsonParser parser = new JsonParser();
+    JsonObject jsonInst = parser.parse(jsonObj).getAsJsonObject();
+
+    JsonParser parser1 = new JsonParser();
+    JsonArray jsonArrayList = parser1.parse(jsonArray).getAsJsonArray();
+
+    jsonInst.add(arrayName, jsonArrayList);
+
+    return jsonInst;
+
+  }
+
+  public static JsonObject addJsonObjectToJsonObject(String jsonObj, String AddjsonObj,
+      String jsonName) {
+
+    JsonParser parser = new JsonParser();
+    JsonObject jsonInst = parser.parse(jsonObj).getAsJsonObject();
+
+    JsonParser parser1 = new JsonParser();
+    JsonObject jsonInst1 = parser1.parse(AddjsonObj).getAsJsonObject();
+
+    jsonInst.add(jsonName, jsonInst1);
+
+    return jsonInst;
+
+  }
+
+  public static String getFile(String filepath, String filename)
+      throws FileNotFoundException, IOException, ParseException {
+
+    File file = new File(System.getProperty("user.dir") + filepath + "/" + filename);
+
+    JSONParser parser = new JSONParser();
+    String jsonString = parser.parse(new FileReader(file)).toString();
+
+    return jsonString;
+
+  }
+
+  public static Object getValueFromJSON(String jsonString, String attribute) {
+
+    if (jsonString.equalsIgnoreCase("null") || jsonString.isEmpty()) {
+
+      return null;
+    }
+
+    Object temp = JsonPath.read(jsonString, "$" + attribute);
+
+    return temp;
+
+  }
+
+  public static String patchJson(String patchString, String SourceString) throws IOException {
+
+    ObjectMapper mapper = new ObjectMapper();
+    JsonNode patchObj = mapper.readTree(patchString);
+    JsonNode sourceObj = mapper.readTree(SourceString);
+
+    JsonNode patchSource = JsonPatch.apply(patchObj, sourceObj);
+
+    String sourceString = patchSource.toString();
+
+    return sourceString;
+
+  }
+
+  public static Object getValueFromResponseBody(Response inputResponse, String inputResponseType) {
+
+    if (inputResponseType.equalsIgnoreCase("status")) {
+
+      if (inputResponse == null) {
+        return 0000;
+      }
+
+      return inputResponse.getStatusCode();
+
+    } else if (inputResponseType.equalsIgnoreCase("body")) {
+
+      if (inputResponse == null) {
+        return null;
+      }
+
+      return inputResponse.getBody().asString();
+
+    }
+
+    return null;
+  }
+
+  public static String getCurrentDatetime() throws IOException {
+
+    Date date = new Date(System.currentTimeMillis());
+
+    SimpleDateFormat dateTimeISO;
+    dateTimeISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    dateTimeISO.setTimeZone(TimeZone.getTimeZone(timeZone));
+
+    return dateTimeISO.format(date);
+
+  }
+
+  public static String dateToISOFormat(Date date) throws IOException {
+
+    SimpleDateFormat dateTimeISO;
+    dateTimeISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    dateTimeISO.setTimeZone(TimeZone.getTimeZone(timeZone));
+
+    return dateTimeISO.format(date);
+
+  }
 
 }

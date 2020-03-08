@@ -1,9 +1,20 @@
 # Default ignored files
 /workspace.xml
+/analytics-streaming-app.sh
+/social-search.sh
 /Automation.iml
+/src/main/java/aut/framework/common/SetFusionDataMap.java
 /.classpath
 /.project
 /.idea
 /.settings/
 /target/**
 /test-results/**
+/src/test/resources/test-data/analytics-model.json
+/src/test/resources/test-data/analytics-search-index.json
+/src/test/resources/test-data/social-search-workflow-runtime.json
+/src/main/java/set/**
+/src/test/java/analytics/**
+/src/test/java/socialsearch/**
+/src/test/java/workflow/**
+/src/test/resources/test-data/SetFusionTestData.xlsx

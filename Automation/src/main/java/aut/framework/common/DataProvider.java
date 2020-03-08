@@ -2,16 +2,24 @@ package aut.framework.common;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-
+import java.util.List;
+import java.util.TimeZone;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -24,144 +32,255 @@ import org.xml.sax.SAXException;
 
 public class DataProvider {
 
-	static XSSFWorkbook WB;
-	static XSSFSheet sheet;
+  static XSSFWorkbook WB;
+  static XSSFSheet sheet;
+  static SetFusionDataMap Url;
 
-	@SuppressWarnings("rawtypes")
-	public static HashMap[][] testData(String sheetName) throws Exception {
 
-		String filepath = ReadProperties.getPropertyValue("TestDataPath",
-				"/src/main/resources/common/Config.Properties");
-		String fileName = ReadProperties.getPropertyValue("TestDataFile",
-				"/src/main/resources/common/Config.Properties");
+  public static HashMap[][] testData(String sheetName) throws Exception {
 
-		File file = new File(System.getProperty("user.dir") + filepath + "/" + fileName);
+    String filepath = ReadProperties.getPropertyValue("TestDataPath", "/src/main/resources/common/Config.Properties");
+    String fileName = ReadProperties.getPropertyValue("TestDataFile", "/src/main/resources/common/Config.Properties");
+    String timeZone = ReadProperties.getPropertyValue("timezone", "/src/main/resources/common/Config.Properties");
 
-		FileInputStream testdatafile = new FileInputStream(file);
+    File file = new File(System.getProperty("user.dir") + filepath + "/" + fileName);
 
-		WB = new XSSFWorkbook(testdatafile);
-		sheet = WB.getSheet(sheetName);
+    FileInputStream testdatafile = new FileInputStream(file);
 
-		ArrayList<LinkedHashMap<String, String>> arraylist = new ArrayList<LinkedHashMap<String, String>>();
+    WB = new XSSFWorkbook(testdatafile);
+    sheet = WB.getSheet(sheetName);
 
-		int frow = 1;
+    FormulaEvaluator evaluator = WB.getCreationHelper().createFormulaEvaluator();
 
-		int totalRows = sheet.getLastRowNum();
-		int totalcols = sheet.getRow(frow).getLastCellNum();
+    ArrayList<LinkedHashMap<String, Object>> arraylist = new ArrayList<LinkedHashMap<String, Object>>();
 
-		for (int i = frow; i <= totalRows; i++) {
+    int firstRow = 1;
 
-			DataFormatter getrunvalue = new DataFormatter();
+    int totalRows = sheet.getLastRowNum();
+    int totalCols = sheet.getRow(firstRow).getLastCellNum();
 
-			XSSFRow actualrow = sheet.getRow(i);
-			XSSFCell runcell = actualrow.getCell(0);
+    for (int i = firstRow; i <= totalRows; i++) {
 
-			int runvalue = Integer.parseInt(getrunvalue.formatCellValue(runcell));
-			if (runvalue == 1) {
+      DataFormatter getRunValue = new DataFormatter();
 
-				LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+      XSSFRow actualRow = sheet.getRow(i);
+      WB.setMissingCellPolicy(Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+      XSSFCell runCell = actualRow.getCell(0);
 
-				for (int j = 0; j < totalcols; j++) {
+      int runvalue = Integer.parseInt(getRunValue.formatCellValue(runCell));
+      if (runvalue == 1) {
 
-					DataFormatter formatter = new DataFormatter();
+        LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
 
-					XSSFCell colcell = actualrow.getCell(j);
-					String fieldvalue = formatter.formatCellValue(colcell);
+        for (int j = 0; j < totalCols; j++) {
 
-					XSSFRow headrow = sheet.getRow(0);
-					XSSFCell headcell = headrow.getCell(j);
-					String fieldname = formatter.formatCellValue(headcell);
+          DataFormatter formatter = new DataFormatter();
 
-					map.put(fieldname, fieldvalue);
+          short x = WB.createDataFormat().getFormat("YYYY-MM-DD;@");
+          short y = WB.createDataFormat().getFormat("YYYY-MM-DD HH:MM:SS;@");
 
-				}
+          SimpleDateFormat dateTimeISO;
+          SimpleDateFormat dateTime;
+          dateTimeISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+          dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+          dateTimeISO.setTimeZone(TimeZone.getTimeZone(timeZone));
 
-				arraylist.add(map);
+          List<String> datetimeList = Arrays.asList(Url.getDateTimeAttributes());
 
-			}
-		}
+          CellStyle dateCellFormat = WB.createCellStyle();
+          CellStyle datetimeCellFormat = WB.createCellStyle();
+          dateCellFormat.setDataFormat(x);
+          datetimeCellFormat.setDataFormat(y);
 
-		HashMap[][] mydata = new HashMap[arraylist.size()][1];
-		for (int i = 0; i < arraylist.size(); i++) {
+          String getColName = sheet.getRow(0).getCell(j).getStringCellValue();
 
-			mydata[i][0] = arraylist.get(i);
+          XSSFCell colCell = actualRow.getCell(j, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
 
-		}
+          Object fieldValue;
 
-		return mydata;
+          if (colCell == null) {
+            fieldValue = null;
+          } else if (colCell.getCellType() == CellType.NUMERIC) {
 
-	}
+            if (DateUtil.isCellDateFormatted(colCell)) {
 
-	@SuppressWarnings("rawtypes")
-	public static HashMap[][] testDataXML(String xmlName)
-			throws IOException, ParserConfigurationException, SAXException {
+              if (datetimeList.contains(getColName)) {
+                colCell.setCellStyle(datetimeCellFormat);
+                fieldValue = dateTimeISO.format(dateTime.parse((String) formatter.formatCellValue(colCell, evaluator)));
+              } else {
+                colCell.setCellStyle(dateCellFormat);
+                fieldValue = formatter.formatCellValue(colCell, evaluator);
+              }
 
-		String filepath = ReadProperties.getPropertyValue("TestDataPath",
-				"/src/main/resources/common/Config.Properties");
+            } else {
+              fieldValue = formatter.formatCellValue(colCell);
+            }
 
-		File file = new File(System.getProperty("user.dir") + filepath + "/" + xmlName + ".xml");
+          } else if (colCell.getCellType() == CellType.STRING) {
+            fieldValue = formatter.formatCellValue(colCell);
 
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder;
+          } else if (colCell.getCellType() == CellType.BOOLEAN) {
+            fieldValue = colCell.getBooleanCellValue();
 
-		dBuilder = dbFactory.newDocumentBuilder();
-		Document doc = dBuilder.parse(file);
-		doc.getDocumentElement().normalize();
-		System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-		NodeList dataList = doc.getElementsByTagName("Dataset");
+          } else if (colCell.getCellType() == CellType.FORMULA) {
+            if (DateUtil.isCellDateFormatted(colCell)) {
+              if (datetimeList.contains(getColName)) {
+                colCell.setCellStyle(datetimeCellFormat);
+                fieldValue = dateTimeISO.format(dateTime.parse((String) formatter.formatCellValue(colCell, evaluator)));
+              } else {
+                colCell.setCellStyle(dateCellFormat);
+                fieldValue = formatter.formatCellValue(colCell, evaluator);
+              }
+            } else {
+              fieldValue = formatter.formatCellValue(colCell, evaluator);
+            }
 
-		System.out.println("DataSet Length: " + dataList.getLength());
+          } else {
+            fieldValue = null;
+          }
 
-		ArrayList<LinkedHashMap<String, String>> arraylist = new ArrayList<LinkedHashMap<String, String>>();
+          XSSFRow headrow = sheet.getRow(0);
+          XSSFCell headcell = headrow.getCell(j, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+          String fieldname = formatter.formatCellValue(headcell);
 
-		for (int i = 0; i < dataList.getLength(); i++) {
+          if (headcell == null) {
+            fieldname = null;
+          }
 
-			Node data = dataList.item(i);
+//          System.out.println("Field Name : " + fieldname + " " + fieldValue);
 
-			LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+          map.put(fieldname, fieldValue);
 
-			if (data.getNodeType() == data.ELEMENT_NODE) {
+        }
 
-				Element dataId = (Element) data;
+        arraylist.add(map);
 
-				String id = dataId.getAttribute("id");
+      }
+    }
 
-				map.put("id", id);
+    HashMap[][] mydata = new HashMap[arraylist.size()][1];
+    for (int i = 0; i < arraylist.size(); i++) {
 
-				NodeList childDataList = data.getChildNodes();
+      mydata[i][0] = arraylist.get(i);
 
-				for (int j = 0; j < childDataList.getLength(); j++) {
+    }
 
-					Node child = childDataList.item(j);
+    return mydata;
 
-					if (child.getNodeType() == child.ELEMENT_NODE) {
+  }
 
-						Element childData = (Element) child;
 
-						String attriName = childData.getTagName();
+  public static HashMap[][] testDataXML(String xmlName)
+      throws IOException, ParserConfigurationException, SAXException {
 
-						String attriValue = child.getTextContent();
+    String filepath = ReadProperties.getPropertyValue("TestDataPath", "/src/main/resources/common/Config.Properties");
 
-						map.put(attriName, attriValue);
-					}
+    File file = new File(System.getProperty("user.dir") + filepath + "/" + xmlName + ".xml");
 
-				}
+    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder dBuilder;
 
-				arraylist.add(map);
+    dBuilder = dbFactory.newDocumentBuilder();
+    Document doc = dBuilder.parse(file);
+    doc.getDocumentElement().normalize();
+    System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+    NodeList dataList = doc.getElementsByTagName("Dataset");
 
-			}
+    System.out.println("DataSet Length: " + dataList.getLength());
 
-		}
+    ArrayList<LinkedHashMap<String, String>> arraylist = new ArrayList<LinkedHashMap<String, String>>();
 
-		HashMap[][] mydata = new HashMap[arraylist.size()][1];
-		for (int i = 0; i < arraylist.size(); i++) {
+    for (int i = 0; i < dataList.getLength(); i++) {
 
-			mydata[i][0] = arraylist.get(i);
+      Node data = dataList.item(i);
 
-		}
+      LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 
-		return mydata;
+      if (data.getNodeType() == data.ELEMENT_NODE) {
 
-	}
+        Element dataId = (Element) data;
+
+        String id = dataId.getAttribute("id");
+
+        map.put("id", id);
+
+        NodeList childDataList = data.getChildNodes();
+
+        for (int j = 0; j < childDataList.getLength(); j++) {
+
+          Node child = childDataList.item(j);
+
+          if (child.getNodeType() == child.ELEMENT_NODE) {
+
+            Element childData = (Element) child;
+
+            String attriName = childData.getTagName();
+
+            String attriValue = child.getTextContent();
+
+            map.put(attriName, attriValue);
+          }
+
+        }
+
+        arraylist.add(map);
+
+      }
+
+    }
+
+    HashMap[][] mydata = new HashMap[arraylist.size()][1];
+    for (int i = 0; i < arraylist.size(); i++) {
+
+      mydata[i][0] = arraylist.get(i);
+
+    }
+
+    return mydata;
+
+  }
+
+  public static void updateDataInExcel(String sheetName, String[] attributes, String attributeValue, String replaceValue) throws Exception {
+
+    String filepath = ReadProperties.getPropertyValue("TestDataPath", "/src/main/resources/common/Config.Properties");
+    String fileName = ReadProperties.getPropertyValue("TestDataFile", "/src/main/resources/common/Config.Properties");
+
+    File file = new File(System.getProperty("user.dir") + filepath + "/" + fileName);
+
+    FileInputStream inputStream = new FileInputStream(file);
+
+    WB = new XSSFWorkbook(inputStream);
+    sheet = WB.getSheet(sheetName);
+
+    List<String> list = Arrays.asList(attributes);
+
+    int frow = 1;
+
+    int totalRows = sheet.getLastRowNum();
+    int totalcols = sheet.getRow(frow).getLastCellNum();
+
+    for (int j = 0; j < totalcols; j++) {
+
+      String getColName = sheet.getRow(0).getCell(j).getStringCellValue();
+
+      if (list.contains(getColName)) {
+
+        for (int i = frow; i <= totalRows; i++) {
+          String getrowValue = sheet.getRow(i).getCell(j).getStringCellValue();
+          if (getrowValue.equalsIgnoreCase(attributeValue)) {
+            sheet.getRow(i).getCell(j).setCellValue(replaceValue);
+          }
+        }
+      }
+    }
+
+    inputStream.close();
+
+    FileOutputStream outputStream = new FileOutputStream(file);
+    WB.write(outputStream);
+    WB.close();
+    outputStream.close();
+
+  }
 
 }
